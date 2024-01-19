@@ -1,0 +1,61 @@
+.tab {
+    text-align: center;
+    font-family: adob arabic;
+    margin-top: 30px;
+}
+
+.tab-heading {
+    border-bottom: 5px solid #d04c12;
+    padding-bottom: 11px;
+    text-align: right;
+}
+.tab span {
+    padding: 10px 2%;
+    border: 1px solid #e67019;
+    font-size: 30px;
+    border-radius: 10px 10px 0 0;
+    cursor: pointer;
+}
+.active{
+    background-color: rgb(190, 113, 80);
+}
+.tab-heading span ~ span{ opacity: 0.3}
+.tab-content div {
+    display: none;
+}
+
+.chart{
+    display: inline-block;
+    height: 400px !important;
+    width: 30% !important;
+    padding: 2px;
+
+}
+
+.chart1{
+    float: left;
+    margin-left:2%;
+}
+.chart2{
+    float: left;
+    margin-left:2%;
+}
+.chart3{
+    float: left;
+    margin-left:2%;
+}
+
+
+.chart4{
+    float: left;
+    margin-left:2%;
+}
+.chart5{
+    float: left;
+    margin-left:2%;
+}
+.chart6{
+    float: left;
+    margin-left:2%;
+}
+
