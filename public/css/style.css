@@ -1,5 +1,6 @@
 .tab {
     text-align: center;
+    direction: ltr;
     font-family: adob arabic;
     margin-top: 30px;
 }
@@ -7,12 +8,12 @@
 .tab-heading {
     border-bottom: 5px solid #d04c12;
     padding-bottom: 11px;
-    text-align: right;
+    text-align: left;
 }
 .tab span {
     padding: 10px 2%;
     border: 1px solid #e67019;
-    font-size: 30px;
+    font-size: 20px;
     border-radius: 10px 10px 0 0;
     cursor: pointer;
 }

@@ -32,53 +32,53 @@
 
     <!-- Scripts -->
 
-{{--    @vite(['resources/sass/app.scss', 'resources/js/app.js'])--}}
+    {{--    @vite(['resources/sass/app.scss', 'resources/js/app.js'])--}}
 </head>
 <body style="display:block;height:1000px">
-    <div id="app" style="height:80%;display:block">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
+<div id="app" style="height:80%;display:block">
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <div class="container">
 
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Left Side Of Navbar -->
+                <ul class="navbar-nav me-auto">
 
-                    </ul>
+                </ul>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-
-
-
-                        @else
-                            <li class="nav-item dropdown">
-
-                                @if(Auth::check())
-                                    <a class="btn btn-primary btn-sm" href="{{ route('logout') }}">
-                                        {{ 'LOGOUT'}}
-                                    </a>
-                                @endif
+                <!-- Right Side Of Navbar -->
+                <ul class="navbar-nav ms-auto" style="float:right">
+                    <!-- Authentication Links -->
+                    @guest
 
 
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
+
+                    @else
+                        <li class="nav-item dropdown">
+
+                            @if(Auth::check())
+                                <a class="btn btn-primary btn-sm" href="{{ route('logout') }}">
+                                    {{ 'LOGOUT'}}
+                                </a>
+                            @endif
+
+
+                        </li>
+                    @endguest
+                </ul>
             </div>
-        </nav>
-
-
-        <div>
-            @yield('content')
         </div>
+    </nav>
+
+
+    <div>
+        @yield('content')
     </div>
+</div>
 
 
 
-    <script src="{{ asset('js/script.js') }}"></script>
+<script src="{{ asset('js/script.js') }}"></script>
 
 
 

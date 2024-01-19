@@ -6,14 +6,14 @@
 <div class="tab">
 
 <div class="tab-heading">
-    <span class="active">نمایش نمودارهای آنلاین</span>
-    <span>نمایش نمودارهای گذشته</span>
+    <span class="active">Live Charts</span>
+    <span>Historical Chart</span>
 </div>
 
 <div class="tab-content" >
 
 <div id="live_charts">
-    <h3 style="margin: 50px 20px">نمودارهای آنلاین</h3>
+    <h3 style="margin: 50px 20px">Live Charts</h3>
     <div style="display: flex">
         <canvas id="line-chart1" class="chart chart1"></canvas>
         <canvas id="line-chart2" class="chart chart2"></canvas>
@@ -24,7 +24,7 @@
 
 
 <div id="historical_charts">
-    <h3 style="margin: 50px 20px">نمودارهای گذشته</h3>
+    <h3 style="margin: 50px 20px">Historical Chart</h3>
     <div style="display: flex">
         <canvas id="line-chart4" class="chart chart4"></canvas>
         <canvas id="line-chart5" class="chart chart5"></canvas>
