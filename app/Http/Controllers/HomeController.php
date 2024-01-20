@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Chart1;
 use App\Models\Chart2;
 use App\Models\Chart3;
+use App\Models\ChartData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -61,9 +62,10 @@ class HomeController extends Controller
         $data_chart1 = Chart1::orderBy('id', 'DESC')->limit(10)->get();
         $data_chart2 = Chart2::orderBy('id', 'DESC')->limit(10)->get();
         $data_chart3 = Chart3::orderBy('id', 'DESC')->limit(10)->get();
-        $display_data = ['data_chart1' => $data_chart1, 'data_chart2' => $data_chart2, 'data_chart3' => $data_chart3];
+
+        $labels = ['2'];
+
+        $display_data = ['drillingParameters' => $data_chart1, 'pressureParameters' => $data_chart2, 'mudParameters' => $data_chart3, 'labels' => $labels];
         echo json_encode($display_data);
     }
-
-
 }
