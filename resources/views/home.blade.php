@@ -84,7 +84,7 @@
                     let pressureParameters = response.pressureParameters;
                     let mudParameters = response.mudParameters;
 
-                    var labels = response.labels;
+                    var labels = response.tags;
 
                     var drillingParameterDatasets = [];
                     for (var key in drillingParameters) {
