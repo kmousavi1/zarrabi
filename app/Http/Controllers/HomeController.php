@@ -27,12 +27,10 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-
     public function index()
     {
         return view('home');
     }
-
 
     public function logout()
     {
@@ -40,71 +38,71 @@ class HomeController extends Controller
         return redirect()->route('login');
     }
 
-
     public function display_data_history($start_datetime, $end_datetime)
     {
+        $display_data = [];
 
-        $tags = [];
-        $display_data=[];
         $start_datetime = str_replace('*', ' ', $start_datetime);
         $end_datetime = str_replace('*', ' ', $end_datetime);
 
-        if (count(Chart1::all())>0)
-        {
-            $data_chart1 = Chart1::whereBetween('datetime', [$start_datetime, $end_datetime])->get()->toArray();
+        $data_chart1 = Chart1::whereBetween('datetime', [$start_datetime, $end_datetime])->get();
+
+        if (count($data_chart1) > 0) {
+            $data_chart1 = $data_chart1->toArray();
             $data_chart2 = Chart2::whereBetween('datetime', [$start_datetime, $end_datetime])->get()->toArray();
             $data_chart3 = Chart3::whereBetween('datetime', [$start_datetime, $end_datetime])->get()->toArray();
 
-            for ($i = 0; $i < count($data_chart1); $i++) {
-                $str = $data_chart1[$i]['datetime'];
-                $time = substr($str, 11, 5);
-                array_push($tags, $time);
-            }
-
-            $drillingChartData = $this->getDrillingChartData($data_chart1);
-            $pressureChartData = $this->getPressureChartData($data_chart2);
-            $mudChartData = $this->getMudChartData($data_chart3);
-
-            $display_data = ['drillingParameters' => $drillingChartData, 'pressureParameters' => $pressureChartData, 'mudParameters' => $mudChartData, 'tags' => $tags];
+            $display_data = $this->getDisplayData($data_chart1, $data_chart2, $data_chart3);
             echo json_encode($display_data);
-
-        }else{
+        } else {
             echo json_encode($display_data);
         }
-
-
-
     }
 
     public function display_data_live()
     {
-        $tags = [];
-        $display_data=[];
+
+        $display_data = [];
         $limit_size = 10;
 
-        if (count(Chart1::all())>0) {
+        $data_chart1 = Chart1::orderBy('id', 'DESC')->limit($limit_size)->get();
 
-            $data_chart1 = Chart1::orderBy('id', 'DESC')->limit($limit_size)->get()->toArray();
+        if (count($data_chart1) > 0) {
+
+            $data_chart1 = $data_chart1->toArray();
             $data_chart2 = Chart2::orderBy('id', 'DESC')->limit($limit_size)->get()->toArray();
             $data_chart3 = Chart3::orderBy('id', 'DESC')->limit($limit_size)->get()->toArray();
 
-            for ($i = 0; $i < $limit_size; $i++) {
-                $str = $data_chart1[$i]['datetime'];
+            $display_data = $this->getDisplayData($data_chart1, $data_chart2, $data_chart3);
+            echo json_encode($display_data);
+        } else {
+            echo json_encode($display_data);
+        }
+    }
+
+    private function getDisplayData($data_chart1, $data_chart2, $data_chart3)
+    {
+        $tags = $this->getLabels($data_chart1);
+
+        $drillingChartData = $this->getDrillingChartData($data_chart1);
+        $pressureChartData = $this->getPressureChartData($data_chart2);
+        $mudChartData = $this->getMudChartData($data_chart3);
+
+        return ['drillingParameters' => $drillingChartData, 'pressureParameters' => $pressureChartData, 'mudParameters' => $mudChartData, 'tags' => $tags];
+    }
+
+    private function getLabels($data)
+    {
+        $tags = [];
+        $len = count($data);
+        if ($len > 0) {
+            for ($i = 0; $i < $len; $i++) {
+                $str = $data[$i]['datetime'];
                 $time = substr($str, 11, 5);
                 array_push($tags, $time);
             }
-
-            $drillingChartData = $this->getDrillingChartData($data_chart1);
-            $pressureChartData = $this->getPressureChartData($data_chart2);
-            $mudChartData = $this->getMudChartData($data_chart3);
-
-            $display_data = ['drillingParameters' => $drillingChartData, 'pressureParameters' => $pressureChartData, 'mudParameters' => $mudChartData, 'tags' => $tags];
-            echo json_encode($display_data);
-        }else{
-            echo json_encode($display_data);
         }
-
-
+        return $tags;
     }
 
     private function getDrillingChartData($data)
