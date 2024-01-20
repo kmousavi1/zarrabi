@@ -45,27 +45,29 @@ class HomeController extends Controller
     {
         $start_datetime = str_replace('*', ' ', $start_datetime);
         $end_datetime = str_replace('*', ' ', $end_datetime);
-//    echo json_encode([$start_datetime,$end_datetime]);
-        $data_chart1 = Chart1::where([
-            'datetime', '>=', $start_datetime,
-            'datetime', '<=', $end_datetime
-        ])->get();
-        echo json_encode($data_chart1);
-//    $data_chart2=Chart2::where('datetime','>=',$start_datetime)->where('datetime','<=',$$end_datetime)->get();
-//    $data_chart3=Chart3::where('datetime','>=',$start_datetime)->where('datetime','<=',$$end_datetime)->get();
-//    $display_data=['data_chart1'=>$data_chart1,'data_chart2'=>$data_chart2,'data_chart3'=>$data_chart3];
-//    echo json_encode($display_data) ;
+        $data_chart1 = Chart1::whereBetween('datetime', [$start_datetime, $end_datetime])->get();
+        $data_chart2 = Chart2::whereBetween('datetime', [$start_datetime, $end_datetime])->get();
+        $data_chart3 = Chart3::whereBetween('datetime', [$start_datetime, $end_datetime])->get();
+        $display_data=['data_chart1'=>$data_chart1,'data_chart2'=>$data_chart2,'data_chart3'=>$data_chart3];
+        echo json_encode($display_data) ;
     }
 
     public function display_data_live()
     {
-        $data_chart1 = Chart1::orderBy('id', 'DESC')->limit(10)->get();
-        $data_chart2 = Chart2::orderBy('id', 'DESC')->limit(10)->get();
-        $data_chart3 = Chart3::orderBy('id', 'DESC')->limit(10)->get();
+        $tags = [];
 
-        $labels = ['2'];
+        $limit_size=10;
+        $data_chart1 = Chart1::orderBy('id', 'DESC')->limit($limit_size)->get();
+        $data_chart2 = Chart2::orderBy('id', 'DESC')->limit($limit_size)->get();
+        $data_chart3 = Chart3::orderBy('id', 'DESC')->limit($limit_size)->get();
+        for ($i=0;$i<$limit_size;$i++) {
+            $str=$data_chart1[$i]['datetime'];
+            $time=substr($str, 11, 5);
+            array_push($tags, $time);
+        }
 
-        $display_data = ['drillingParameters' => $data_chart1, 'pressureParameters' => $data_chart2, 'mudParameters' => $data_chart3, 'labels' => $labels];
+
+        $display_data = ['drillingParameters' => $data_chart1, 'pressureParameters' => $data_chart2, 'mudParameters' => $data_chart3, 'tags' => $tags];
         echo json_encode($display_data);
     }
 }

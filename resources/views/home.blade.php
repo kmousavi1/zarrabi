@@ -61,8 +61,8 @@
         function all(status) {
             console.log(status);
 
-            var datetime_start = '2024-01-11*00:00:00';
-            var datetime_end = '2024-01-14*00:00:00';
+            var datetime_start = '2024-01-20 23:45:42';
+            var datetime_end = '2024-01-20 23:45:43';
             var url_live = 'display_data_live/';
             var url_history = 'display_data_history/' + datetime_start + '/' + datetime_end;
             var current_url;
@@ -71,6 +71,8 @@
             } else {
                 current_url = url_live;
             }
+
+            console.log(current_url);
 
             $.ajax({
                 url: current_url,
