@@ -40,7 +40,7 @@
                         </div>
 
                         <div style="margin-left: 35px">
-{{--                            <button id="submit"  value="Filter"/>--}}
+                            {{--                            <button id="submit"  value="Filter"/>--}}
                             <button id="submit" class="btn btn-dark" onclick="get_history(event)">Filter</button>
                         </div>
                     </form>
@@ -62,7 +62,7 @@
             $(".tab-content div").eq(0).show();
             status = "live";
             var url = 'display_data_live/';
-            all(status,url);
+            all(status, url);
 
             $(".tab-heading span").click(function () {
                 $(this).addClass("active").css({opacity: 1}).siblings().removeClass("active").css({opacity: 0.3})
@@ -74,7 +74,7 @@
                     $('#filters').hide();
                     status = "live";
                     url = 'display_data_live/';
-                    all(status,url);
+                    all(status, url);
 
                 } else if (index == 1) {
 
@@ -83,34 +83,31 @@
                     $('#filters').show();
                     status = "history";
                     url = 'display_data_history/2024-01-21*15:41:08/2024-01-21*15:41:10';
-                    all(status,url);
+                    all(status, url);
                 }
             })
-
-
-
         })
-
-
 
         function get_history(event) {
             event.preventDefault();
             status = "history";
-            var datetime_start=$(".filter-from-date").val();
-            var datetime_end=$(".filter-to-date").val();
+            var datetime_start = $(".filter-from-date").val();
+            var datetime_end = $(".filter-to-date").val();
 
-            datetime_start=datetime_start.replace("/", '-');datetime_start=datetime_start.replace("/", '-');
-            datetime_start=datetime_start.replace(" ", '*');
-            datetime_end=datetime_end.replace("/", '-');datetime_end=datetime_end.replace("/", '-');
-            datetime_end=datetime_end.replace(" ", '*');
+            datetime_start = datetime_start.replace("/", '-');
+            datetime_start = datetime_start.replace("/", '-');
+            datetime_start = datetime_start.replace(" ", '*');
+            datetime_end = datetime_end.replace("/", '-');
+            datetime_end = datetime_end.replace("/", '-');
+            datetime_end = datetime_end.replace(" ", '*');
 
             var url = 'display_data_history/' + datetime_start + '/' + datetime_end;
             console.log(status);
             console.log(url);
-            all(status,url);
+            all(status, url);
         }
 
-        function all(status,url) {
+        function all(status, url) {
 
             console.log(url);
 
@@ -162,11 +159,19 @@
                         pressureParametersDatasets.push(dataset);
                     }
 
-                    if (status == "history") {
+                    if (status === "history") {
+                        chartDestroy("line-chart4");
+                        chartDestroy("line-chart5");
+                        chartDestroy("line-chart6");
+
                         chartDisplay("line-chart4", 'Drilling Parameter', labels, drillingParameterDatasets)
                         chartDisplay("line-chart5", 'Pressure Parameter', labels, pressureParametersDatasets)
                         chartDisplay("line-chart6", 'Mud Parameters', labels, mudParametersDatasets)
                     } else {
+                        chartDestroy("line-chart1");
+                        chartDestroy("line-chart2");
+                        chartDestroy("line-chart3");
+
                         chartDisplay("line-chart1", 'Drilling Parameter', labels, drillingParameterDatasets)
                         chartDisplay("line-chart2", 'Pressure Parameter', labels, pressureParametersDatasets)
                         chartDisplay("line-chart3", 'Mud Parameters', labels, mudParametersDatasets)
@@ -177,7 +182,7 @@
 
         function chartDisplay(chartId, chartTitle, labels, datasets) {
             var ctx = document.getElementById(chartId).getContext('2d');
-            new Chart(ctx, {
+            var chart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
@@ -197,6 +202,14 @@
                     responsive: false
                 }
             });
+            return chart;
+        }
+
+        function chartDestroy(chartId){
+            let chart = Chart.getChart(chartId);
+            if(chart){
+                chart.destroy();
+            }
         }
 
         function getRandomColor() {
