@@ -25,12 +25,12 @@
     display: none;
 }
 
-.chart{
-    display: inline-block;
-    height: 400px !important;
-    width: 30% !important;
-    padding: 2px;
-}
+/*.chart{*/
+/*    display: inline-block;*/
+/*    height: 400px !important;*/
+/*    width: 30% !important;*/
+/*    padding: 2px;*/
+/*}*/
 
 .chart1{
     float: left;

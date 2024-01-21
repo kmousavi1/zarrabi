@@ -136,7 +136,7 @@
         }
 
         function chartDisplay(chartId, chartTitle, labels, datasets) {
-            var ctx = document.getElementById(chartId);
+            var ctx = document.getElementById(chartId).getContext('2d');
             new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -153,7 +153,8 @@
                     interaction: {
                         intersect: false,
                         mode: 'index',
-                    }
+                    },
+                    responsive: false
                 }
             });
         }
