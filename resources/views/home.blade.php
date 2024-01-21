@@ -56,13 +56,17 @@
     {{--    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>--}}
     <script>
         var status;
+        var myInterval;
 
         $(document).ready(function () {
 
             $(".tab-content div").eq(0).show();
             status = "live";
             var url = 'display_data_live/';
-            all(status, url);
+            myInterval = setInterval(all, 5000, status, url);
+            // var myInterval = setInterval(all(status, url), 2000);
+            // all(status, url);
+
 
             $(".tab-heading span").click(function () {
                 $(this).addClass("active").css({opacity: 1}).siblings().removeClass("active").css({opacity: 0.3})
@@ -74,7 +78,8 @@
                     $('#filters').hide();
                     status = "live";
                     url = 'display_data_live/';
-                    all(status, url);
+                    myInterval = setInterval(all, 5000, status, url);
+                    // var myInterval = setInterval(all(status, url), 2000);
 
                 } else if (index == 1) {
 
@@ -83,6 +88,7 @@
                     $('#filters').show();
                     status = "history";
                     url = 'display_data_history/2024-01-21*15:41:08/2024-01-21*15:41:10';
+                    clearInterval(myInterval);
                     all(status, url);
                 }
             })

@@ -64,6 +64,7 @@ class HomeController extends Controller
 
     public function display_data_live()
     {
+
         $display_data = [];
         $limit_size = 10;
 

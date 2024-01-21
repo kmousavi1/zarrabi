@@ -37,7 +37,7 @@
 
     {{--    @vite(['resources/sass/app.scss', 'resources/js/app.js'])--}}
 </head>
-<body style="display:block;height:1000px">
+<body style="display:block;height:700px">
 <div id="app" style="height:80%;display:block">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
