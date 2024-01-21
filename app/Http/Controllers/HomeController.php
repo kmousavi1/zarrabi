@@ -45,12 +45,13 @@ class HomeController extends Controller
         $start_datetime = str_replace('*', ' ', $start_datetime);
         $end_datetime = str_replace('*', ' ', $end_datetime);
 
-        $data_chart1 = Chart1::whereBetween('datetime', [$start_datetime, $end_datetime])->get();
+        $data_chart = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])->get();
 
-        if (count($data_chart1) > 0) {
-            $data_chart1 = $data_chart1->toArray();
-            $data_chart2 = Chart2::whereBetween('datetime', [$start_datetime, $end_datetime])->get()->toArray();
-            $data_chart3 = Chart3::whereBetween('datetime', [$start_datetime, $end_datetime])->get()->toArray();
+        if (count($data_chart) > 0) {
+
+            $data_chart1 = $this->getDrillingData($data_chart);
+            $data_chart2 = $this->getPressureData($data_chart);
+            $data_chart3 = $this->getMudData($data_chart);
 
             $display_data = $this->getDisplayData($data_chart1, $data_chart2, $data_chart3);
             echo json_encode($display_data);
@@ -65,19 +66,48 @@ class HomeController extends Controller
         $display_data = [];
         $limit_size = 10;
 
-        $data_chart1 = Chart1::orderBy('id', 'DESC')->limit($limit_size)->get();
+        $data_chart = ChartData::orderBy('id', 'DESC')->limit($limit_size)->get();
 
-        if (count($data_chart1) > 0) {
+        if (count($data_chart) > 0) {
 
-            $data_chart1 = $data_chart1->toArray();
-            $data_chart2 = Chart2::orderBy('id', 'DESC')->limit($limit_size)->get()->toArray();
-            $data_chart3 = Chart3::orderBy('id', 'DESC')->limit($limit_size)->get()->toArray();
+            $data_chart1 = $this->getDrillingData($data_chart);
+            $data_chart2 = $this->getPressureData($data_chart);
+            $data_chart3 = $this->getMudData($data_chart);
 
             $display_data = $this->getDisplayData($data_chart1, $data_chart2, $data_chart3);
             echo json_encode($display_data);
         } else {
             echo json_encode($display_data);
         }
+    }
+
+    private function getDrillingData($data_chart){
+        $BLKPOSCOMP = $data_chart->pluck('BLKPOSCOMP ');
+        $HKLD = $data_chart->pluck('HKLD');
+        $WOB = $data_chart->pluck('WOB');
+        $TORQ = $data_chart->pluck('TORQ');
+        $SURFRPM = $data_chart->pluck('SURFRPM');
+        $BITRPM = $data_chart->pluck('BITRPM');
+        return ['BLKPOSCOMP' => $BLKPOSCOMP, 'HKLD' => $HKLD, 'WOB' => $WOB, 'TORQ' => $TORQ,
+            'SURFRPM' => $SURFRPM, 'BITRPM' => $BITRPM];
+    }
+
+    private function getPressureData($data_chart){
+        $SPP = $data_chart->pluck('SPP ');
+        $CSGP = $data_chart->pluck('CSGP');
+        $SPM01 = $data_chart->pluck('SPM01');
+        $SPM02 = $data_chart->pluck('SPM02');
+        $SPM03 = $data_chart->pluck('SPM03');
+        $FLOWIN = $data_chart->pluck('FLOWIN');
+        return ['SPP' => $SPP, 'CSGP' => $CSGP, 'SPM01' => $SPM01, 'SPM02' => $SPM02,
+            'SPM03' => $SPM03, 'FLOWIN' => $FLOWIN];
+    }
+
+    private function getMudData($data_chart){
+        $PITACTIVE = $data_chart->pluck('PITACTIVE ');
+        $FLOWOUTP = $data_chart->pluck('FLOWOUTP');
+        $TGAS = $data_chart->pluck('TGAS');
+        return ['PITACTIVE' => $PITACTIVE, 'FLOWOUTP' => $FLOWOUTP, 'TGAS' => $TGAS];
     }
 
     private function getDisplayData($data_chart1, $data_chart2, $data_chart3)
