@@ -56,14 +56,20 @@
     {{--    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>--}}
     <script>
         var status;
-        var myInterval;
+        // var myInterval;
+        let lineChart1;
+        let lineChart2;
+        let lineChart3;
+        let lineChart4;
+        let lineChart5;
+        let lineChart6;
 
         $(document).ready(function () {
 
             $(".tab-content div").eq(0).show();
             status = "live";
             var url = 'display_data_live/';
-            myInterval = setInterval(all, 5000, status, url);
+            // myInterval = setInterval(all, 5000, status, url);
             // var myInterval = setInterval(all(status, url), 2000);
             // all(status, url);
 
@@ -71,24 +77,24 @@
             $(".tab-heading span").click(function () {
                 $(this).addClass("active").css({opacity: 1}).siblings().removeClass("active").css({opacity: 0.3})
                 var index = $(this).index();
-                if (index == 0) {
+                if (index === 0) {
 
                     $('#live_charts').show();
                     $('#historical_charts').hide();
                     $('#filters').hide();
                     status = "live";
                     url = 'display_data_live/';
-                    myInterval = setInterval(all, 5000, status, url);
+                    // myInterval = setInterval(all, 5000, status, url);
                     // var myInterval = setInterval(all(status, url), 2000);
 
-                } else if (index == 1) {
+                } else if (index === 1) {
 
                     $('#live_charts').hide();
                     $('#historical_charts').show();
                     $('#filters').show();
                     status = "history";
                     url = 'display_data_history/2024-01-21*15:41:08/2024-01-21*15:41:10';
-                    clearInterval(myInterval);
+                    // clearInterval(myInterval);
                     all(status, url);
                 }
             })
@@ -114,9 +120,7 @@
         }
 
         function all(status, url) {
-
             console.log(url);
-
             $.ajax({
                 url: url,
                 method: "get",
@@ -135,6 +139,7 @@
                             label: key,
                             data: drillingParameters[key],
                             fill: false,
+                            pointRadius: 2,
                             borderColor: getRandomColor(),
                             tension: 0.4
                         };
@@ -147,6 +152,7 @@
                             label: key,
                             data: mudParameters[key],
                             fill: false,
+                            pointRadius: 2,
                             borderColor: getRandomColor(),
                             tension: 0.4
                         };
@@ -159,6 +165,7 @@
                             label: key,
                             data: pressureParameters[key],
                             fill: false,
+                            pointRadius: 2,
                             borderColor: getRandomColor(),
                             tension: 0.4
                         };
@@ -166,28 +173,22 @@
                     }
 
                     if (status === "history") {
-                        chartDestroy("line-chart4");
-                        chartDestroy("line-chart5");
-                        chartDestroy("line-chart6");
-
-                        chartDisplay("line-chart4", 'Drilling Parameter', labels, drillingParameterDatasets)
-                        chartDisplay("line-chart5", 'Pressure Parameter', labels, pressureParametersDatasets)
-                        chartDisplay("line-chart6", 'Mud Parameters', labels, mudParametersDatasets)
+                        lineChart4 = chartDisplay("line-chart4", 'Drilling Parameter', labels, drillingParameterDatasets)
+                        lineChart5 = chartDisplay("line-chart5", 'Pressure Parameter', labels, pressureParametersDatasets)
+                        lineChart6 = chartDisplay("line-chart6", 'Mud Parameters', labels, mudParametersDatasets)
                     } else {
-                        chartDestroy("line-chart1");
-                        chartDestroy("line-chart2");
-                        chartDestroy("line-chart3");
-
-                        chartDisplay("line-chart1", 'Drilling Parameter', labels, drillingParameterDatasets)
-                        chartDisplay("line-chart2", 'Pressure Parameter', labels, pressureParametersDatasets)
-                        chartDisplay("line-chart3", 'Mud Parameters', labels, mudParametersDatasets)
+                        lineChart1 = chartDisplay("line-chart1", 'Drilling Parameter', labels, drillingParameterDatasets)
+                        lineChart2 = chartDisplay("line-chart2", 'Pressure Parameter', labels, pressureParametersDatasets)
+                        lineChart3 = chartDisplay("line-chart3", 'Mud Parameters', labels, mudParametersDatasets)
                     }
                 }
             })
         }
 
         function chartDisplay(chartId, chartTitle, labels, datasets) {
+            chartDestroy(chartId);
             var ctx = document.getElementById(chartId).getContext('2d');
+            console.log('ctx',ctx);
             var chart = new Chart(ctx, {
                 type: 'line',
                 data: {
