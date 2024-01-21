@@ -56,30 +56,30 @@ class APIController extends Controller
 
 //    return json_encode((string)$request['chart1_data']['id'][0]);
 
+        $chartDataResponse = $request['data'];
 
-        $chartData = $request['data'];
-
-        if ($chartData) {
-            for ($i = 0; $i < count($chartData['id']); $i++) {
+        if ($chartDataResponse) {
+            foreach ($chartDataResponse as $data){
                 $chart = new ChartData();
-                $chart->id = $chartData['id'][$i];
-                $chart->BLKPOSCOMP = $chartData['BLKPOSCOMP'][$i];
-                $chart->HKLD = $chartData['HKLD'][$i];
-                $chart->WOB = $chartData['WOB'][$i];
-                $chart->TORQ = $chartData['TORQ'][$i];
-                $chart->SURFRPM = $chartData['SURFRPM'][$i];
-                $chart->BITRPM = $chartData['BITRPM'][$i];
 
-                $chart->SPP = $chartData['SPP'][$i];
-                $chart->CSGP = $chartData['CSGP'][$i];
-                $chart->SPM01 = $chartData['SPM01'][$i];
-                $chart->SPM02 = $chartData['SPM02'][$i];
-                $chart->SPM03 = $chartData['SPM03'][$i];
-                $chart->FLOWIN = $chartData['FLOWIN'][$i];
+                $chart->id = $data['id'];
+                $chart->BLKPOSCOMP = $data['BLKPOSCOMP'];
+                $chart->HKLD = $data['HKLD'];
+                $chart->WOB = $data['WOB'];
+                $chart->TORQ = $data['TORQ'];
+                $chart->SURFRPM = $data['SURFRPM'];
+                $chart->BITRPM = $data['BITRPM'];
 
-                $chart->PITACTIVE = $chartData['PITACTIVE'][$i];
-                $chart->FLOWOUTP = $chartData['FLOWOUTP'][$i];
-                $chart->TGAS = $chartData['TGAS'][$i];
+                $chart->SPP = $data['SPP'];
+                $chart->CSGP = $data['CSGP'];
+                $chart->SPM01 = $data['SPM01'];
+                $chart->SPM02 = $data['SPM02'];
+                $chart->SPM03 = $data['SPM03'];
+                $chart->FLOWIN = $data['FLOWIN'];
+
+                $chart->PITACTIVE = $data['PITACTIVE'];
+                $chart->FLOWOUTP = $data['FLOWOUTP'];
+                $chart->TGAS = $data['TGAS'];
 
                 try {
                     $chart->save();
