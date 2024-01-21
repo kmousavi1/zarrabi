@@ -21,9 +21,9 @@
             <div id="historical_charts">
                 <h3 style="margin: 50px 20px">Historical Chart</h3>
                 <div style="display: flex">
-                    <canvas id="line-chart4" class="chart chart4"></canvas>
-                    <canvas id="line-chart5" class="chart chart5"></canvas>
-                    <canvas id="line-chart6" class="chart chart6"></canvas>
+                    <canvas id="line-chart4" class="chart chart4" style="width:100%;max-width:600px"></canvas>
+                    <canvas id="line-chart5" class="chart chart5" style="width:100%;max-width:600px"></canvas>
+                    <canvas id="line-chart6" class="chart chart6" style="width:100%;max-width:600px"></canvas>
                 </div>
             </div>
 
@@ -122,14 +122,14 @@
                         pressureParametersDatasets.push(dataset);
                     }
 
-                    if (status == "history") {
-                        chartDisplay("line-chart4",'Drilling Parameter',labels,drillingParameterDatasets)
-                        chartDisplay("line-chart5",'Pressure Parameter',labels,pressureParametersDatasets)
-                        chartDisplay("line-chart6",'Mud Parameters',labels,mudParametersDatasets)
+                    if (status === "history") {
+                        chartDisplay("line-chart4", 'Drilling Parameter', labels, drillingParameterDatasets)
+                        chartDisplay("line-chart5", 'Pressure Parameter', labels, pressureParametersDatasets)
+                        chartDisplay("line-chart6", 'Mud Parameters', labels, mudParametersDatasets)
                     } else {
-                        chartDisplay("line-chart1",'Drilling Parameter',labels,drillingParameterDatasets)
-                        chartDisplay("line-chart2",'Pressure Parameter',labels,pressureParametersDatasets)
-                        chartDisplay("line-chart3",'Mud Parameters',labels,mudParametersDatasets)
+                        chartDisplay("line-chart1", 'Drilling Parameter', labels, drillingParameterDatasets)
+                        chartDisplay("line-chart2", 'Pressure Parameter', labels, pressureParametersDatasets)
+                        chartDisplay("line-chart3", 'Mud Parameters', labels, mudParametersDatasets)
                     }
                 }
             })
