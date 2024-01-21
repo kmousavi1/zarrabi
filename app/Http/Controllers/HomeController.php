@@ -41,11 +41,14 @@ class HomeController extends Controller
     public function display_data_history($start_datetime, $end_datetime)
     {
         $display_data = [];
-
         $start_datetime = str_replace('*', ' ', $start_datetime);
         $end_datetime = str_replace('*', ' ', $end_datetime);
 
+//        $start_datetime='2024-01-21 15:41:08';
+//        $end_datetime='2024-01-21 15:41:10';
+
         $chartData = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])->get();
+
 
         if (count($chartData) > 0) {
             $chartData = $chartData->toArray();

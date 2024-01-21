@@ -20,12 +20,34 @@
 
             <div id="historical_charts">
                 <h3 style="margin: 50px 20px">Historical Chart</h3>
+
                 <div style="display: flex">
                     <canvas id="line-chart4" class="chart chart4" style="width:100%;max-width:600px"></canvas>
                     <canvas id="line-chart5" class="chart chart5" style="width:100%;max-width:600px"></canvas>
                     <canvas id="line-chart6" class="chart chart6" style="width:100%;max-width:600px"></canvas>
                 </div>
+
+                <div id="filters" class="filters">
+                    <form id="form">
+                        <div>
+                            <label for="filter-date">From Date &nbsp</label>
+                            <input type="text" class="filter-from-date" name="filter-date" id="filter-date"/>
+                        </div>
+
+                        <div style="margin-left: 35px">
+                            <label for="filter-date">To Date &nbsp</label>
+                            <input type="text" class="filter-to-date" name="filter-date" id="filter-date"/>
+                        </div>
+
+                        <div style="margin-left: 35px">
+{{--                            <button id="submit"  value="Filter"/>--}}
+                            <button id="submit" class="btn btn-dark" onclick="get_history(event)">Filter</button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
+
 
         </div>
     </div>
@@ -39,43 +61,61 @@
 
             $(".tab-content div").eq(0).show();
             status = "live";
-            all(status);
+            var url = 'display_data_live/';
+            all(status,url);
+
             $(".tab-heading span").click(function () {
                 $(this).addClass("active").css({opacity: 1}).siblings().removeClass("active").css({opacity: 0.3})
                 var index = $(this).index();
                 if (index == 0) {
+
                     $('#live_charts').show();
                     $('#historical_charts').hide();
+                    $('#filters').hide();
                     status = "live";
-                    all(status);
+                    url = 'display_data_live/';
+                    all(status,url);
+
                 } else if (index == 1) {
+
                     $('#live_charts').hide();
                     $('#historical_charts').show();
+                    $('#filters').show();
                     status = "history";
-                    all(status);
+                    url = 'display_data_history/2024-01-21*15:41:08/2024-01-21*15:41:10';
+                    all(status,url);
                 }
             })
+
+
+
         })
 
-        // setInterval(all, 5000);
-        function all(status) {
+
+
+        function get_history(event) {
+            event.preventDefault();
+            status = "history";
+            var datetime_start=$(".filter-from-date").val();
+            var datetime_end=$(".filter-to-date").val();
+
+            datetime_start=datetime_start.replace("/", '-');datetime_start=datetime_start.replace("/", '-');
+            datetime_start=datetime_start.replace(" ", '*');
+            datetime_end=datetime_end.replace("/", '-');datetime_end=datetime_end.replace("/", '-');
+            datetime_end=datetime_end.replace(" ", '*');
+
+            var url = 'display_data_history/' + datetime_start + '/' + datetime_end;
             console.log(status);
+            console.log(url);
+            all(status,url);
+        }
 
-            var datetime_start = '2024-01-21*00:49:18';
-            var datetime_end = '2024-01-21*00:49:19';
-            var url_live = 'display_data_live/';
-            var url_history = 'display_data_history/' + datetime_start + '/' + datetime_end;
-            var current_url;
-            if (status == "history") {
-                current_url = url_history;
-            } else {
-                current_url = url_live;
-            }
+        function all(status,url) {
 
-            console.log(current_url);
+            console.log(url);
 
             $.ajax({
-                url: current_url,
+                url: url,
                 method: "get",
                 success: function (response) {
                     response = JSON.parse(response)
@@ -122,7 +162,7 @@
                         pressureParametersDatasets.push(dataset);
                     }
 
-                    if (status === "history") {
+                    if (status == "history") {
                         chartDisplay("line-chart4", 'Drilling Parameter', labels, drillingParameterDatasets)
                         chartDisplay("line-chart5", 'Pressure Parameter', labels, pressureParametersDatasets)
                         chartDisplay("line-chart6", 'Mud Parameters', labels, mudParametersDatasets)

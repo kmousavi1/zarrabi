@@ -59,3 +59,50 @@
     margin-left:2%;
 }
 
+
+.filters {
+    float: left;
+    margin-left: 50px;
+    margin-top: 50px;
+    padding: 20px;
+    width: 700px;
+    height: 70px;
+    border-radius: 20px;
+    background-color: #2fbcbc;
+    box-shadow:2px 2px 5px #1c6666;
+}
+
+
+
+#search {
+    position: fixed;
+    bottom: 0;
+    z-index: 3;
+    width: 100%;
+    color: #f0f0f0;
+    background-color: #333;
+    opacity: 0.9;
+    -webkit-opacity: 0.9;
+    -moz-opacity: 0.9;
+}
+
+#search form {
+    width: 960px;
+    margin: 0 auto;
+    padding: 0.5em;
+}
+
+#search form > div,
+#filters form > div {
+    display: inline;
+}
+
+
+
+
+
+
+
+
+
+
