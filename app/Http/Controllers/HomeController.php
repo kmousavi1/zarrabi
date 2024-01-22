@@ -119,16 +119,16 @@ class HomeController extends Controller
             $date9 = date('H:i', strtotime('-5 minute', strtotime($date8)));
 
             $tags = [];
-            array_push($tags, $nowDate);
-            array_push($tags, $date1);
-            array_push($tags, $date2);
-            array_push($tags, $date3);
-            array_push($tags, $date4);
-            array_push($tags, $date5);
-            array_push($tags, $date6);
-            array_push($tags, $date7);
-            array_push($tags, $date8);
             array_push($tags, $date9);
+            array_push($tags, $date8);
+            array_push($tags, $date7);
+            array_push($tags, $date6);
+            array_push($tags, $date5);
+            array_push($tags, $date4);
+            array_push($tags, $date3);
+            array_push($tags, $date2);
+            array_push($tags, $date1);
+            array_push($tags, $nowDate);
 
             $display_data = ['drillingParameters' => [], 'pressureParameters' => [], 'mudParameters' => [], 'tags' => $tags];
             echo json_encode($display_data);
