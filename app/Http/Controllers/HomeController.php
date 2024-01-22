@@ -95,7 +95,6 @@ class HomeController extends Controller
         $limit_size = 10;
 
         $end_datetime = date("Y-m-d H:i:s");
-        //add 1 hour to time
         $start_datetime = date('Y-m-d H:i:s', strtotime('-1 minute', strtotime($end_datetime)));
 
         $chartData = ChartData::orderBy('id', 'DESC')->whereBetween('datetime', [$start_datetime, $end_datetime])->limit($limit_size)->get();
@@ -108,7 +107,30 @@ class HomeController extends Controller
             $display_data = $this->getDisplayData($chartData, $tags);
             echo json_encode($display_data);
         } else {
-            $display_data = ['drillingParameters' => [], 'pressureParameters' => [], 'mudParameters' => [], 'tags' => []];
+            $nowDate = date("H:i");
+            $date1 = date('H:i', strtotime('-5 minute', strtotime($nowDate)));
+            $date2 = date('H:i', strtotime('-5 minute', strtotime($date1)));
+            $date3 = date('H:i', strtotime('-5 minute', strtotime($date2)));
+            $date4 = date('H:i', strtotime('-5 minute', strtotime($date3)));
+            $date5 = date('H:i', strtotime('-5 minute', strtotime($date4)));
+            $date6 = date('H:i', strtotime('-5 minute', strtotime($date5)));
+            $date7 = date('H:i', strtotime('-5 minute', strtotime($date6)));
+            $date8 = date('H:i', strtotime('-5 minute', strtotime($date7)));
+            $date9 = date('H:i', strtotime('-5 minute', strtotime($date8)));
+
+            $tags = [];
+            array_push($tags, $nowDate);
+            array_push($tags, $date1);
+            array_push($tags, $date2);
+            array_push($tags, $date3);
+            array_push($tags, $date4);
+            array_push($tags, $date5);
+            array_push($tags, $date6);
+            array_push($tags, $date7);
+            array_push($tags, $date8);
+            array_push($tags, $date9);
+
+            $display_data = ['drillingParameters' => [], 'pressureParameters' => [], 'mudParameters' => [], 'tags' => $tags];
             echo json_encode($display_data);
         }
     }
