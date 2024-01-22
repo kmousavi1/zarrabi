@@ -22,7 +22,7 @@
 }
 .tab-heading span ~ span{ opacity: 0.3}
 .tab-content div {
-    display: none;
+    /*display: none;*/
 }
 
 /*.chart{*/
@@ -32,18 +32,18 @@
 /*    padding: 2px;*/
 /*}*/
 
-.chart1{
-    float: left;
-    margin-left:2%;
-}
-.chart2{
-    float: left;
-    margin-left:2%;
-}
-.chart3{
-    float: left;
-    margin-left:2%;
-}
+/*.chart1{*/
+/*    float: left;*/
+/*    margin-left:2%;*/
+/*}*/
+/*.chart2{*/
+/*    float: left;*/
+/*    margin-left:2%;*/
+/*}*/
+/*.chart3{*/
+/*    float: left;*/
+/*    margin-left:2%;*/
+/*}*/
 
 
 .chart4{
@@ -96,13 +96,3 @@
 #filters form > div {
     display: inline;
 }
-
-
-
-
-
-
-
-
-
-

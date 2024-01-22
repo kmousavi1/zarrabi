@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     <div class="tab">
         <div class="tab-heading">
             <span class="active">Live Charts</span>
@@ -11,20 +10,45 @@
         <div class="tab-content">
             <div id="live_charts">
                 <h3 style="margin: 50px 20px">Live Charts</h3>
-                <div style="display: flex">
-                    <canvas id="line-chart1" class="chart chart1" style="width:100%;max-width:600px"></canvas>
-                    <canvas id="line-chart2" class="chart chart2" style="width:100%;max-width:600px"></canvas>
-                    <canvas id="line-chart3" class="chart chart3" style="width:100%;max-width:600px"></canvas>
+                {{--<div style="display: flex">
+                    <canvas id="line-chart1" class="chart1" style="width:100%;max-width:600px"></canvas>
+                    <canvas id="line-chart2" class="chart2" style="width:100%;max-width:600px"></canvas>
+                    <canvas id="line-chart3" class="chart3" style="width:100%;max-width:600px"></canvas>
+                </div>--}}
+                <div class="container-fluid h-100">
+                    <div class="row justify-content-center h-100">
+                        <div class="col-4 hidden-md-down">
+                            <canvas id="line-chart1" class="chart1" style="width:100%;max-width:600px"></canvas>
+                        </div>
+                        <div class="col-4 hidden-md-down">
+                            <canvas id="line-chart2" class="chart2" style="width:100%;max-width:600px"></canvas>
+                        </div>
+                        <div class="col-4 hidden-md-down">
+                            <canvas id="line-chart3" class="chart3" style="width:100%;max-width:600px"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
-
             <div id="historical_charts">
                 <h3 style="margin: 50px 20px">Historical Chart</h3>
 
-                <div style="display: flex">
-                    <canvas id="line-chart4" class="chart chart4" style="width:100%;max-width:600px"></canvas>
-                    <canvas id="line-chart5" class="chart chart5" style="width:100%;max-width:600px"></canvas>
-                    <canvas id="line-chart6" class="chart chart6" style="width:100%;max-width:600px"></canvas>
+                {{--<div style="display: flex">
+                    <canvas id="line-chart4" class="chart4" style="width:100%;max-width:600px"></canvas>
+                    <canvas id="line-chart5" class="chart5" style="width:100%;max-width:600px"></canvas>
+                    <canvas id="line-chart6" class="chart6" style="width:100%;max-width:600px"></canvas>
+                </div>--}}
+                <div class="container-fluid h-100">
+                    <div class="row justify-content-center h-100">
+                        <div class="col-4 hidden-md-down">
+                            <canvas id="line-chart4" class="chart1" style="width:100%;max-width:600px"></canvas>
+                        </div>
+                        <div class="col-4 hidden-md-down">
+                            <canvas id="line-chart5" class="chart2" style="width:100%;max-width:600px"></canvas>
+                        </div>
+                        <div class="col-4 hidden-md-down">
+                            <canvas id="line-chart6" class="chart3" style="width:100%;max-width:600px"></canvas>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="filters" class="filters">
@@ -40,7 +64,7 @@
                         </div>
 
                         <div style="margin-left: 35px">
-                            {{--                            <button id="submit"  value="Filter"/>--}}
+                            <button id="submit" value="Filter"/>
                             <button id="submit" class="btn btn-dark" onclick="get_history(event)">Filter</button>
                         </div>
                     </form>
@@ -57,12 +81,6 @@
     <script>
         var status;
         // var myInterval;
-        let lineChart1;
-        let lineChart2;
-        let lineChart3;
-        let lineChart4;
-        let lineChart5;
-        let lineChart6;
 
         $(document).ready(function () {
 
@@ -71,11 +89,15 @@
             var url = 'display_data_live/';
             // myInterval = setInterval(all, 5000, status, url);
             // var myInterval = setInterval(all(status, url), 2000);
-            // all(status, url);
-
+            all(status, url);
 
             $(".tab-heading span").click(function () {
-                $(this).addClass("active").css({opacity: 1}).siblings().removeClass("active").css({opacity: 0.3})
+                $(this)
+                    .addClass("active")
+                    .css({opacity: 1})
+                    .siblings()
+                    .removeClass("active")
+                    .css({opacity: 0.3})
                 var index = $(this).index();
                 if (index === 0) {
 
@@ -86,7 +108,7 @@
                     url = 'display_data_live/';
                     // myInterval = setInterval(all, 5000, status, url);
                     // var myInterval = setInterval(all(status, url), 2000);
-
+                    all(status, url);
                 } else if (index === 1) {
 
                     $('#live_charts').hide();
@@ -139,7 +161,6 @@
                             label: key,
                             data: drillingParameters[key],
                             fill: false,
-                            pointRadius: 2,
                             borderColor: getRandomColor(),
                             tension: 0.4
                         };
@@ -152,7 +173,6 @@
                             label: key,
                             data: mudParameters[key],
                             fill: false,
-                            pointRadius: 2,
                             borderColor: getRandomColor(),
                             tension: 0.4
                         };
@@ -165,7 +185,6 @@
                             label: key,
                             data: pressureParameters[key],
                             fill: false,
-                            pointRadius: 2,
                             borderColor: getRandomColor(),
                             tension: 0.4
                         };
@@ -173,13 +192,13 @@
                     }
 
                     if (status === "history") {
-                        lineChart4 = chartDisplay("line-chart4", 'Drilling Parameter', labels, drillingParameterDatasets)
-                        lineChart5 = chartDisplay("line-chart5", 'Pressure Parameter', labels, pressureParametersDatasets)
-                        lineChart6 = chartDisplay("line-chart6", 'Mud Parameters', labels, mudParametersDatasets)
+                        chartDisplay("line-chart4", 'Drilling Parameter', labels, drillingParameterDatasets)
+                        chartDisplay("line-chart5", 'Pressure Parameter', labels, pressureParametersDatasets)
+                        chartDisplay("line-chart6", 'Mud Parameters', labels, mudParametersDatasets)
                     } else {
-                        lineChart1 = chartDisplay("line-chart1", 'Drilling Parameter', labels, drillingParameterDatasets)
-                        lineChart2 = chartDisplay("line-chart2", 'Pressure Parameter', labels, pressureParametersDatasets)
-                        lineChart3 = chartDisplay("line-chart3", 'Mud Parameters', labels, mudParametersDatasets)
+                        chartDisplay("line-chart1", 'Drilling Parameter', labels, drillingParameterDatasets)
+                        chartDisplay("line-chart2", 'Pressure Parameter', labels, pressureParametersDatasets)
+                        chartDisplay("line-chart3", 'Mud Parameters', labels, mudParametersDatasets)
                     }
                 }
             })
@@ -188,7 +207,6 @@
         function chartDisplay(chartId, chartTitle, labels, datasets) {
             chartDestroy(chartId);
             var ctx = document.getElementById(chartId).getContext('2d');
-            console.log('ctx',ctx);
             var chart = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -205,16 +223,15 @@
                     interaction: {
                         intersect: false,
                         mode: 'index',
-                    },
-                    responsive: false
+                    }
                 }
             });
             return chart;
         }
 
-        function chartDestroy(chartId){
+        function chartDestroy(chartId) {
             let chart = Chart.getChart(chartId);
-            if(chart){
+            if (chart) {
                 chart.destroy();
             }
         }

@@ -85,22 +85,22 @@ class HomeController extends Controller
     private function getDrillingChartData($data)
     {
         $SURFRPM = array_map(function ($object) {
-            return $object['SURFRPM'];
+            return round($object['SURFRPM'], 5);
         }, $data);
         $WOB = array_map(function ($object) {
-            return $object['WOB'];
+            return round($object['WOB'], 5);
         }, $data);
         $BITRPM = array_map(function ($object) {
-            return $object['BITRPM'];
+            return round($object['BITRPM'], 5);
         }, $data);
         $TORQ = array_map(function ($object) {
-            return $object['TORQ'];
+            return round($object['TORQ'], 5);
         }, $data);
         $BLKPOSCOMP = array_map(function ($object) {
-            return $object['BLKPOSCOMP'];
+            return round($object['BLKPOSCOMP'], 5);
         }, $data);
         $HKLD = array_map(function ($object) {
-            return $object['HKLD'];
+            return round($object['HKLD'], 5);
         }, $data);
         return array("SURFRPM" => $SURFRPM, "WOB" => $WOB, "BITRPM" => $BITRPM, "TORQ" => $TORQ, "BLKPOSCOMP" => $BLKPOSCOMP, "HKLD" => $HKLD);
     }
@@ -108,22 +108,22 @@ class HomeController extends Controller
     private function getPressureChartData($data)
     {
         $SPP = array_map(function ($object) {
-            return $object['SPP'];
+            return round($object['SPP'], 5);
         }, $data);
         $CSGP = array_map(function ($object) {
-            return $object['CSGP'];
+            return round($object['CSGP'], 5);
         }, $data);
         $SPM01 = array_map(function ($object) {
-            return $object['SPM01'];
+            return round($object['SPM01'], 5);
         }, $data);
         $SPM02 = array_map(function ($object) {
-            return $object['SPM02'];
+            return round($object['SPM02'], 5);
         }, $data);
         $SPM03 = array_map(function ($object) {
-            return $object['SPM03'];
+            return round($object['SPM03'], 5);
         }, $data);
         $FLOWIN = array_map(function ($object) {
-            return $object['FLOWIN'];
+            return round($object['FLOWIN'], 5);
         }, $data);
         return array("SPP" => $SPP, "CSGP" => $CSGP, "SPM01" => $SPM01, "SPM02" => $SPM02, "SPM03" => $SPM03, "FLOWIN" => $FLOWIN);
     }
@@ -131,13 +131,13 @@ class HomeController extends Controller
     private function getMudChartData($data)
     {
         $PITACTIVE = array_map(function ($object) {
-            return $object['PITACTIVE'];
+            return round($object['PITACTIVE'], 5);
         }, $data);
         $FLOWOUTP = array_map(function ($object) {
-            return $object['FLOWOUTP'];
+            return round($object['FLOWOUTP'], 5);
         }, $data);
         $TGAS = array_map(function ($object) {
-            return $object['TGAS'];
+            return round($object['TGAS'], 5);
         }, $data);
         return array("PITACTIVE" => $PITACTIVE, "FLOWOUTP" => $FLOWOUTP, "TGAS" => $TGAS);
     }
