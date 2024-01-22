@@ -37,8 +37,13 @@
 
     {{--    @vite(['resources/sass/app.scss', 'resources/js/app.js'])--}}
 </head>
-<body style="display:block;height:700px">
+
+{{--<img src="{{ asset('img/background_image.jpg') }}" alt="Girl in a jacket" width="500" height="600">--}}
+
+<body style="display:block;height:700px;">
 <div id="app" style="height:80%;display:block">
+{{--    @dd(\Request::route()->getName())--}}
+    @if(\Request::route()->getName()!="login")
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
 
@@ -72,9 +77,10 @@
             </div>
         </div>
     </nav>
+    @endif
 
 
-    <div>
+    <div @if(\Request::route()->getName()=="login")  style="width:100%;height:700px;background-image: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), url({{url('img/background_image.jpg')}});"  @endif>
         @yield('content')
     </div>
 </div>

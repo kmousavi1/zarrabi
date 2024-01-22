@@ -4,7 +4,7 @@
 <div class="container">
     <div class="d-flex justify-content-center">
 
-        <div class="col-md-8">
+        <div class="col-md-8" style="margin-top: 100px">
             @if (session('status'))
                 <div class="d-flex justify-content-center">
                     <div class="alert alert-warning col-md-12 text-center" role="alert">
@@ -13,7 +13,7 @@
                 </div>
 
             @endif
-            <div class="card">
+            <div class="card" >
 
                 <div class="card-header">{{ __('Login') }}</div>
 
