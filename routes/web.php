@@ -24,6 +24,7 @@ Route::get('/', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/display_data_history/{start_datetime}/{end_datetime}', [App\Http\Controllers\HomeController::class, 'display_data_history'])->name('display_data_history');
+Route::get('/display_data_history', [App\Http\Controllers\HomeController::class, 'display_data_history_'])->name('display_data_history');
 Route::get('/display_data_live', [App\Http\Controllers\HomeController::class, 'display_data_live'])->name('display_data_live');
 Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('logout');
 Route::get('/login', [App\Http\Controllers\loginController::class, 'index'])->name('login');

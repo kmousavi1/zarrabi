@@ -10,11 +10,6 @@
         <div class="tab-content">
             <div id="live_charts">
                 <h3 style="margin: 50px 20px">Live Charts</h3>
-                {{--<div style="display: flex">
-                    <canvas id="line-chart1" class="chart1" style="width:100%;max-width:600px"></canvas>
-                    <canvas id="line-chart2" class="chart2" style="width:100%;max-width:600px"></canvas>
-                    <canvas id="line-chart3" class="chart3" style="width:100%;max-width:600px"></canvas>
-                </div>--}}
                 <div class="container-fluid h-100">
                     <div class="row justify-content-center h-100">
                         <div class="col-4 hidden-md-down">
@@ -31,12 +26,6 @@
             </div>
             <div id="historical_charts">
                 <h3 style="margin: 50px 20px">Historical Chart</h3>
-
-                {{--<div style="display: flex">
-                    <canvas id="line-chart4" class="chart4" style="width:100%;max-width:600px"></canvas>
-                    <canvas id="line-chart5" class="chart5" style="width:100%;max-width:600px"></canvas>
-                    <canvas id="line-chart6" class="chart6" style="width:100%;max-width:600px"></canvas>
-                </div>--}}
                 <div class="container-fluid h-100">
                     <div class="row justify-content-center h-100">
                         <div class="col-4 hidden-md-down">
@@ -71,8 +60,6 @@
                 </div>
 
             </div>
-
-
         </div>
     </div>
 
@@ -80,11 +67,15 @@
     {{--    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>--}}
     <script>
         var status;
-        // var myInterval;
 
         $(document).ready(function () {
 
             $(".tab-content div").eq(0).show();
+
+            $('#live_charts').show();
+            $('#historical_charts').hide();
+            $('#filters').hide();
+
             status = "live";
             var url = 'display_data_live/';
             // myInterval = setInterval(all, 5000, status, url);
@@ -115,7 +106,7 @@
                     $('#historical_charts').show();
                     $('#filters').show();
                     status = "history";
-                    url = 'display_data_history/2024-01-21*15:41:08/2024-01-21*15:41:10';
+                    url = 'display_data_history/';
                     // clearInterval(myInterval);
                     all(status, url);
                 }
@@ -166,6 +157,17 @@
                         };
                         drillingParameterDatasets.push(dataset);
                     }
+                    if(drillingParameterDatasets.length === 0){
+                        var dataset = {
+                            label: "No data",
+                            data: [],
+                            fill: false,
+                            borderColor: getRandomColor(),
+                            tension: 0.4
+                        };
+
+                        drillingParameterDatasets.push(dataset);
+                    }
 
                     var mudParametersDatasets = [];
                     for (var key in mudParameters) {
@@ -178,12 +180,32 @@
                         };
                         mudParametersDatasets.push(dataset);
                     }
+                    if(mudParametersDatasets.length === 0){
+                        var dataset = {
+                            label: "No data",
+                            data: [],
+                            fill: false,
+                            borderColor: getRandomColor(),
+                            tension: 0.4
+                        };
+                        mudParametersDatasets.push(dataset);
+                    }
 
                     var pressureParametersDatasets = [];
                     for (var key in pressureParameters) {
                         var dataset = {
                             label: key,
                             data: pressureParameters[key],
+                            fill: false,
+                            borderColor: getRandomColor(),
+                            tension: 0.4
+                        };
+                        pressureParametersDatasets.push(dataset);
+                    }
+                    if(pressureParametersDatasets.length === 0){
+                        var dataset = {
+                            label: "No data",
+                            data: [],
                             fill: false,
                             borderColor: getRandomColor(),
                             tension: 0.4

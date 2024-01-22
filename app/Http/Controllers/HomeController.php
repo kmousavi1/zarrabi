@@ -44,8 +44,34 @@ class HomeController extends Controller
         $start_datetime = str_replace('*', ' ', $start_datetime);
         $end_datetime = str_replace('*', ' ', $end_datetime);
 
-//        $start_datetime='2024-01-21 15:41:08';
-//        $end_datetime='2024-01-21 15:41:10';
+        if (!$start_datetime){
+            $end_datetime = date("Y-m-d H:i:s");
+            //add 1 hour to time
+            $start_datetime = date('Y-m-d H:i:s', strtotime('-24 hour', strtotime($end_datetime)));
+        }
+
+        $chartData = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])->get();
+
+
+        if (count($chartData) > 0) {
+            $chartData = $chartData->toArray();
+
+            $tags = $this->getLabels($chartData);
+
+            $display_data = $this->getDisplayData($chartData, $tags);
+            echo json_encode($display_data);
+        } else {
+            echo json_encode($display_data);
+        }
+    }
+
+    public function display_data_history_()
+    {
+        $display_data = [];
+
+            $end_datetime = date("Y-m-d H:i:s");
+            //add 1 hour to time
+            $start_datetime = date('Y-m-d H:i:s', strtotime('-24 hour', strtotime($end_datetime)));
 
         $chartData = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])->get();
 
@@ -68,7 +94,11 @@ class HomeController extends Controller
         $display_data = [];
         $limit_size = 10;
 
-        $chartData = ChartData::orderBy('id', 'DESC')->limit($limit_size)->get();
+        $end_datetime = date("Y-m-d H:i:s");
+        //add 1 hour to time
+        $start_datetime = date('Y-m-d H:i:s', strtotime('-1 minute', strtotime($end_datetime)));
+
+        $chartData = ChartData::orderBy('id', 'DESC')->whereBetween('datetime', [$start_datetime, $end_datetime])->limit($limit_size)->get();
 
         if (count($chartData) > 0) {
             $chartData = $chartData->toArray();
@@ -78,6 +108,7 @@ class HomeController extends Controller
             $display_data = $this->getDisplayData($chartData, $tags);
             echo json_encode($display_data);
         } else {
+            $display_data = ['drillingParameters' => [], 'pressureParameters' => [], 'mudParameters' => [], 'tags' => []];
             echo json_encode($display_data);
         }
     }
