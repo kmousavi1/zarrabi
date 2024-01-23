@@ -53,7 +53,6 @@
                         </div>
 
                         <div style="margin-left: 35px">
-                            <button id="submit" value="Filter"/>
                             <button id="submit" class="btn btn-dark" onclick="get_history(event)">Filter</button>
                         </div>
                     </form>

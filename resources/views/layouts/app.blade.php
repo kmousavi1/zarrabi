@@ -80,7 +80,8 @@
     @endif
 
 
-    <div @if(\Request::route()->getName()=="login")  style="width:100%;height:700px;background-image: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), url({{url('img/background_image.jpg')}});"  @endif>
+    <div @if(\Request::route()->getName()=="login")  style="width:100%;height:700px;background-image: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), url({{url('img/background_image.jpg')}});
+                background-repeat:no-repeat;background-position: center center;background-size: 100%;"  @endif>
         @yield('content')
     </div>
 </div>
