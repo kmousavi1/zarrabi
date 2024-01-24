@@ -22,33 +22,26 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
 
 
-    <!-- Scripts -->
-
-    {{--    @vite(['resources/sass/app.scss', 'resources/js/app.js'])--}}
 </head>
 
-{{--<img src="{{ asset('img/background_image.jpg') }}" alt="Girl in a jacket" width="500" height="600">--}}
 
-<body style="display:block;height:700px;">
-<div id="app" style="height:80%;display:block">
+<body style="display:block;height:100vh;">
+<div id="app" style="height:100%;display:block">
 {{--    @dd(\Request::route()->getName())--}}
     @if(\Request::route()->getName()!="login")
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
 
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="height:40px">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav me-auto">
 
@@ -65,7 +58,7 @@
                         <li class="nav-item dropdown">
 
                             @if(Auth::check())
-                                <a class="btn btn-primary btn-sm" href="{{ route('logout') }}">
+                                <a class="btn btn-primary btn-sm" style="width:80px;height:40px;line-height:14px;border-radius: 10px;font-size: 12px" href="{{ route('logout') }}">
                                     {{ 'LOGOUT'}}
                                 </a>
                             @endif
@@ -80,7 +73,7 @@
     @endif
 
 
-    <div @if(\Request::route()->getName()=="login")  style="width:100%;height:700px;background-image: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), url({{url('img/background_image.jpg')}});
+    <div @if(\Request::route()->getName()=="login")  style="width:100%;height:100%;background-image: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), url({{url('img/background_image_4.jpg')}});
                 background-repeat:no-repeat;background-position: center center;background-size: 100%;"  @endif>
         @yield('content')
     </div>

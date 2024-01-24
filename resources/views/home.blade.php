@@ -25,6 +25,27 @@
                 </div>
             </div>
             <div id="historical_charts">
+                <div style="width:100%;margin-top:17px;display:flex;height:45px;">
+                    <div id="filters" class="filters" style="width: 60%;margin: auto">
+                        <form id="form">
+                            <div>
+                                <label for="filter-date">From Date &nbsp</label>
+                                <input type="text" class="filter-from-date" name="filter-date" id="filter-date"/>
+                            </div>
+
+                            <div style="margin-left: 35px">
+                                <label for="filter-date">To Date &nbsp</label>
+                                <input type="text" class="filter-to-date" name="filter-date" id="filter-date"/>
+                            </div>
+
+                            <div style="margin-left: 35px">
+                                <button id="submit" class="btn" style="background-color: #810d0d;height:38px;
+                                width: 90px;border-radius: 13px;color: white;" onclick="get_history(event)">Filter</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
                 <h3 style="margin: 50px 20px">Historical Chart</h3>
                 <div class="container-fluid h-100">
                     <div class="row justify-content-center h-100">
@@ -39,25 +60,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div id="filters" class="filters">
-                    <form id="form">
-                        <div>
-                            <label for="filter-date">From Date &nbsp</label>
-                            <input type="text" class="filter-from-date" name="filter-date" id="filter-date"/>
-                        </div>
-
-                        <div style="margin-left: 35px">
-                            <label for="filter-date">To Date &nbsp</label>
-                            <input type="text" class="filter-to-date" name="filter-date" id="filter-date"/>
-                        </div>
-
-                        <div style="margin-left: 35px">
-                            <button id="submit" class="btn btn-dark" onclick="get_history(event)">Filter</button>
-                        </div>
-                    </form>
-                </div>
-
             </div>
         </div>
     </div>

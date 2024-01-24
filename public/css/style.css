@@ -62,13 +62,13 @@
 
 .filters {
     float: left;
-    margin-left: 50px;
-    margin-top: 50px;
+    /*margin-left: 50px;*/
+    /*margin-top: 50px;*/
     padding: 20px;
-    width: 700px;
+    margin:auto;
     height: 70px;
     border-radius: 20px;
-    background-color: #2fbcbc;
+    background-color: #829ed3bd;
     box-shadow:2px 2px 5px #1c6666;
 }
 
