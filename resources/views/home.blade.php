@@ -158,17 +158,6 @@
                         };
                         drillingParameterDatasets.push(dataset);
                     }
-                    if(drillingParameterDatasets.length === 0){
-                        var dataset = {
-                            label: "No data",
-                            data: [],
-                            fill: false,
-                            borderColor: getRandomColor(),
-                            tension: 0.4
-                        };
-
-                        drillingParameterDatasets.push(dataset);
-                    }
 
                     var mudParametersDatasets = [];
                     for (var key in mudParameters) {
@@ -181,32 +170,12 @@
                         };
                         mudParametersDatasets.push(dataset);
                     }
-                    if(mudParametersDatasets.length === 0){
-                        var dataset = {
-                            label: "No data",
-                            data: [],
-                            fill: false,
-                            borderColor: getRandomColor(),
-                            tension: 0.4
-                        };
-                        mudParametersDatasets.push(dataset);
-                    }
 
                     var pressureParametersDatasets = [];
                     for (var key in pressureParameters) {
                         var dataset = {
                             label: key,
                             data: pressureParameters[key],
-                            fill: false,
-                            borderColor: getRandomColor(),
-                            tension: 0.4
-                        };
-                        pressureParametersDatasets.push(dataset);
-                    }
-                    if(pressureParametersDatasets.length === 0){
-                        var dataset = {
-                            label: "No data",
-                            data: [],
                             fill: false,
                             borderColor: getRandomColor(),
                             tension: 0.4

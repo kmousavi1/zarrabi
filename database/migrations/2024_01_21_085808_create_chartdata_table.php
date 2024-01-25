@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('chartdata', function (Blueprint $table) {
             $table->id();
-            $table->datetime('datetime')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->datetime('datetime');
             $table->double('BLKPOSCOMP')->nullable();
             $table->double('HKLD')->nullable();
             $table->double('WOB')->nullable();
