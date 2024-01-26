@@ -40,26 +40,24 @@ class HomeController extends Controller
 
     public function display_data_history($start_datetime, $end_datetime)
     {
-        $display_data = [];
         $start_datetime = str_replace('*', ' ', $start_datetime);
         $end_datetime = str_replace('*', ' ', $end_datetime);
 
         if (!$start_datetime) {
             $end_datetime = date("Y-m-d H:i:s");
-            //add 1 hour to time
             $start_datetime = date('Y-m-d H:i:s', strtotime('-24 hour', strtotime($end_datetime)));
         }
 
-        $chartData = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])->get();
+        $chartData = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])
+            ->orderBy('datetime', 'DESC')
+            ->get();
         if (count($chartData) > 0) {
             $chartData = $chartData->toArray();
-
-            $tags = $this->getTags($chartData);
-            $display_data = $this->getDisplayData($chartData, $tags);
-            echo json_encode($display_data);
-        } else {
-            echo json_encode($display_data);
         }
+
+        $tags = $this->getTags($chartData);
+        $display_data = $this->getDisplayData($chartData, $tags);
+        echo json_encode($display_data);
     }
 
     public function display_data_history_()
