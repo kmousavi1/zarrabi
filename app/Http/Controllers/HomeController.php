@@ -50,6 +50,7 @@ class HomeController extends Controller
 
         $chartData = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])
             ->orderBy('datetime', 'DESC')
+            ->limit(2000)
             ->get();
         if (count($chartData) > 0) {
             $chartData = $chartData->toArray();
@@ -67,6 +68,7 @@ class HomeController extends Controller
 
         $chartData = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])
             ->orderBy('datetime', 'DESC')
+            ->limit(2000)
             ->get();
         if (count($chartData) > 0) {
             $chartData = $chartData->toArray();
@@ -79,8 +81,6 @@ class HomeController extends Controller
 
     public function display_data_live()
     {
-        $limit_size = 10;
-
         $end_datetime = date("Y-m-d H:i:s");
         $start_datetime = date('Y-m-d H:i:s', strtotime('-10 minute', strtotime($end_datetime)));
 
