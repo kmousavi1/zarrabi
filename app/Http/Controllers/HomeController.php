@@ -57,7 +57,7 @@ class HomeController extends Controller
             $chartData = $chartData->toArray();
         }
 
-        $tags = $this->getTags($chartData);
+        $tags = $this->getTags($chartData, $end_datetime);
         $display_data = $this->getDisplayData($chartData, $tags);
         echo json_encode($display_data);
     }
@@ -75,7 +75,7 @@ class HomeController extends Controller
             $chartData = $chartData->toArray();
         }
 
-        $tags = $this->getTags($chartData);
+        $tags = $this->getTags($chartData, $end_datetime);
         $display_data = $this->getDisplayData($chartData, $tags);
         echo json_encode($display_data);
     }
@@ -94,7 +94,7 @@ class HomeController extends Controller
             $chartData = $chartData->toArray();
         }
 
-        $tags = $this->getTags($chartData);
+        $tags = $this->getTags($chartData, $end_datetime);
         $display_data = $this->getDisplayData($chartData, $tags);
         echo json_encode($display_data);
     }
