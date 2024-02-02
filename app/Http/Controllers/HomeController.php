@@ -121,12 +121,12 @@ class HomeController extends Controller
                 return round($object['HKLD'], 5);
             }, $data);
         } else {
-            $SURFRPM = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $WOB = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $BITRPM = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $TORQ = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $BLKPOSCOMP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $HKLD = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $SURFRPM = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $WOB = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $BITRPM = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $TORQ = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $BLKPOSCOMP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $HKLD = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         }
 
         return array("SURFRPM" => $SURFRPM, "WOB" => $WOB, "BITRPM" => $BITRPM, "TORQ" => $TORQ, "BLKPOSCOMP" => $BLKPOSCOMP, "HKLD" => $HKLD);
@@ -154,12 +154,12 @@ class HomeController extends Controller
                 return round($object['FLOWIN'], 5);
             }, $data);
         } else {
-            $SPP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $CSGP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $SPM01 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $SPM02 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $SPM03 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $FLOWIN = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $SPP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $CSGP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $SPM01 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $SPM02 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $SPM03 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $FLOWIN = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         }
         return array("SPP" => $SPP, "CSGP" => $CSGP, "SPM01" => $SPM01, "SPM02" => $SPM02, "SPM03" => $SPM03, "FLOWIN" => $FLOWIN);
     }
@@ -177,9 +177,9 @@ class HomeController extends Controller
                 return round($object['TGAS'], 5);
             }, $data);
         } else {
-            $PITACTIVE = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $FLOWOUTP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $TGAS = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $PITACTIVE = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $FLOWOUTP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $TGAS = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         }
         return array("PITACTIVE" => $PITACTIVE, "FLOWOUTP" => $FLOWOUTP, "TGAS" => $TGAS);
     }

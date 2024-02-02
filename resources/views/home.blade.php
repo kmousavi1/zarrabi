@@ -151,9 +151,10 @@
                         var dataset = {
                             label: key,
                             data: drillingParameters[key],
-                            fill: false,
+                            // fill: false,
+                            borderWidth: 1,
                             borderColor: getRandomColor(),
-                            tension: 0.4
+                            // tension: 0.4
                         };
                         drillingParameterDatasets.push(dataset);
                     }
@@ -163,9 +164,10 @@
                         var dataset = {
                             label: key,
                             data: mudParameters[key],
-                            fill: false,
+                            // fill: false,
+                            borderWidth: 1,
                             borderColor: getRandomColor(),
-                            tension: 0.4
+                            // tension: 0.4
                         };
                         mudParametersDatasets.push(dataset);
                     }
@@ -175,9 +177,10 @@
                         var dataset = {
                             label: key,
                             data: pressureParameters[key],
-                            fill: false,
+                            // fill: false,
+                            borderWidth: 1,
                             borderColor: getRandomColor(),
-                            tension: 0.4
+                            // tension: 0.4
                         };
                         pressureParametersDatasets.push(dataset);
                     }
@@ -211,10 +214,6 @@
                             display: true,
                             text: chartTitle
                         }
-                    },
-                    interaction: {
-                        intersect: false,
-                        mode: 'index',
                     }
                 }
             });
