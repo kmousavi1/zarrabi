@@ -52,6 +52,7 @@ class HomeController extends Controller
             ->orderBy('datetime', 'DESC')
             ->limit(2000)
             ->get();
+
         if (count($chartData) > 0) {
             $chartData = $chartData->toArray();
         }
@@ -82,7 +83,7 @@ class HomeController extends Controller
     public function display_data_live()
     {
         $end_datetime = date("Y-m-d H:i:s");
-        $start_datetime = date('Y-m-d H:i:s', strtotime('-10 minute', strtotime($end_datetime)));
+        $start_datetime = date('Y-m-d H:i:s', strtotime('-60 minute', strtotime($end_datetime)));
 
         $chartData = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])
             ->orderBy('datetime', 'DESC')
@@ -192,7 +193,7 @@ class HomeController extends Controller
         return ['drillingParameters' => $drillingChartData, 'pressureParameters' => $pressureChartData, 'mudParameters' => $mudChartData, 'tags' => $tags];
     }
 
-    private function getTags($data)
+    private function getTags($data, $endDate)
     {
         $tags = [];
         if (count($data) > 0) {
@@ -204,17 +205,26 @@ class HomeController extends Controller
         } else {
             date_default_timezone_set("Asia/Tehran");
 
-            $nowDate = date("H:i");
-            $date1 = date('H:i', strtotime('-1 minute', strtotime($nowDate)));
-            $date2 = date('H:i', strtotime('-1 minute', strtotime($date1)));
-            $date3 = date('H:i', strtotime('-1 minute', strtotime($date2)));
-            $date4 = date('H:i', strtotime('-1 minute', strtotime($date3)));
-            $date5 = date('H:i', strtotime('-1 minute', strtotime($date4)));
-            $date6 = date('H:i', strtotime('-1 minute', strtotime($date5)));
-            $date7 = date('H:i', strtotime('-1 minute', strtotime($date6)));
-            $date8 = date('H:i', strtotime('-1 minute', strtotime($date7)));
-            $date9 = date('H:i', strtotime('-1 minute', strtotime($date8)));
+            if ($endDate) {
+                $nowDate = date('H:i', strtotime($endDate));
+            } else {
+                $nowDate = date("H:i");
+            }
 
+            $date1 = date('H:i', strtotime('-5 minute', strtotime($nowDate)));
+            $date2 = date('H:i', strtotime('-5 minute', strtotime($date1)));
+            $date3 = date('H:i', strtotime('-5 minute', strtotime($date2)));
+            $date4 = date('H:i', strtotime('-5 minute', strtotime($date3)));
+            $date5 = date('H:i', strtotime('-5 minute', strtotime($date4)));
+            $date6 = date('H:i', strtotime('-5 minute', strtotime($date5)));
+            $date7 = date('H:i', strtotime('-5 minute', strtotime($date6)));
+            $date8 = date('H:i', strtotime('-5 minute', strtotime($date7)));
+            $date9 = date('H:i', strtotime('-5 minute', strtotime($date8)));
+            $date10 = date('H:i', strtotime('-5 minute', strtotime($date9)));
+            $date11 = date('H:i', strtotime('-5 minute', strtotime($date10)));
+
+            array_push($tags, $date11);
+            array_push($tags, $date10);
             array_push($tags, $date9);
             array_push($tags, $date8);
             array_push($tags, $date7);

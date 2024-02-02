@@ -65,7 +65,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    {{--    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>--}}
     <script>
         var status;
 
@@ -206,6 +205,7 @@
                     datasets: datasets
                 },
                 options: {
+                    indexAxis: 'y',
                     plugins: {
                         title: {
                             display: true,
