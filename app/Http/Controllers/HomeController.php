@@ -29,7 +29,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('home');
+        return view('navbar.index');
     }
 
     public function logout()
@@ -80,14 +80,13 @@ class HomeController extends Controller
         echo json_encode($display_data);
     }
 
-    public function display_data_live()
+    public function liveData()
     {
         $end_datetime = date("Y-m-d H:i:s");
-        $start_datetime = date('Y-m-d H:i:s', strtotime('-60 minute', strtotime($end_datetime)));
+        $start_datetime = date('Y-m-d H:i:s', strtotime('-30 minute', strtotime($end_datetime)));
 
         $chartData = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])
             ->orderBy('datetime', 'DESC')
-//            ->limit($limit_size)
             ->get();
 
         if (count($chartData) > 0) {
@@ -121,15 +120,31 @@ class HomeController extends Controller
                 return round($object['HKLD'], 5);
             }, $data);
         } else {
-            $SURFRPM = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $WOB = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $BITRPM = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $TORQ = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $BLKPOSCOMP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $HKLD = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $SURFRPM = [0, 0, 0, 0, 0, 0];
+            $WOB = [0, 0, 0, 0, 0, 0];
+            $BITRPM = [0, 0, 0, 0, 0, 0];
+            $TORQ = [0, 0, 0, 0, 0, 0];
+            $BLKPOSCOMP = [0, 0, 0, 0, 0, 0];
+            $HKLD = [0, 0, 0, 0, 0, 0];
         }
 
-        return array("SURFRPM" => $SURFRPM, "WOB" => $WOB, "BITRPM" => $BITRPM, "TORQ" => $TORQ, "BLKPOSCOMP" => $BLKPOSCOMP, "HKLD" => $HKLD);
+        $colors = array(
+            "SURFRPM" => "#e3d1d1",
+            "WOB" => "#c49493",
+            "BITRPM" => "#593130",
+            "TORQ" => "#c2d1c4",
+            "BLKPOSCOMP" => "#9fbfa3",
+            "HKLD" => "#456349"
+        );
+
+        return array("SURFRPM" => $SURFRPM,
+            "WOB" => $WOB,
+            "BITRPM" => $BITRPM,
+            "TORQ" => $TORQ,
+            "BLKPOSCOMP" => $BLKPOSCOMP,
+            "HKLD" => $HKLD,
+            "colors" => $colors
+        );
     }
 
     private function getPressureChartData($data)
@@ -154,14 +169,32 @@ class HomeController extends Controller
                 return round($object['FLOWIN'], 5);
             }, $data);
         } else {
-            $SPP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $CSGP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $SPM01 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $SPM02 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $SPM03 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $FLOWIN = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $SPP = [0, 0, 0, 0, 0, 0];
+            $CSGP = [0, 0, 0, 0, 0, 0];
+            $SPM01 = [0, 0, 0, 0, 0, 0];
+            $SPM02 = [0, 0, 0, 0, 0, 0];
+            $SPM03 = [0, 0, 0, 0, 0, 0];
+            $FLOWIN = [0, 0, 0, 0, 0, 0];
         }
-        return array("SPP" => $SPP, "CSGP" => $CSGP, "SPM01" => $SPM01, "SPM02" => $SPM02, "SPM03" => $SPM03, "FLOWIN" => $FLOWIN);
+
+        $colors = array(
+            "SPP" => "#41914c",
+            "CSGP" => "#42ad50",
+            "SPM01" => "#90e09a",
+            "SPM02" => "#7e9e82",
+            "SPM03" => "#5f8564",
+            "FLOWIN" => "#3a523d"
+        );
+
+        return array(
+            "SPP" => $SPP,
+            "CSGP" => $CSGP,
+            "SPM01" => $SPM01,
+            "SPM02" => $SPM02,
+            "SPM03" => $SPM03,
+            "FLOWIN" => $FLOWIN,
+            "colors" => $colors
+        );
     }
 
     private function getMudChartData($data)
@@ -177,11 +210,23 @@ class HomeController extends Controller
                 return round($object['TGAS'], 5);
             }, $data);
         } else {
-            $PITACTIVE = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $FLOWOUTP = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            $TGAS = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $PITACTIVE = [0, 0, 0, 0, 0, 0];
+            $FLOWOUTP = [0, 0, 0, 0, 0, 0];
+            $TGAS = [0, 0, 0, 0, 0, 0];
         }
-        return array("PITACTIVE" => $PITACTIVE, "FLOWOUTP" => $FLOWOUTP, "TGAS" => $TGAS);
+
+        $colors = array(
+            "PITACTIVE" => "#d3e1f5",
+            "FLOWOUTP" => "#a5bbd9",
+            "TGAS" => "#bac3cf"
+        );
+
+        return array(
+            "PITACTIVE" => $PITACTIVE,
+            "FLOWOUTP" => $FLOWOUTP,
+            "TGAS" => $TGAS,
+            "colors"=> $colors
+        );
     }
 
     private function getDisplayData($data, $tags)
@@ -216,19 +261,7 @@ class HomeController extends Controller
             $date3 = date('H:i', strtotime('-5 minute', strtotime($date2)));
             $date4 = date('H:i', strtotime('-5 minute', strtotime($date3)));
             $date5 = date('H:i', strtotime('-5 minute', strtotime($date4)));
-            $date6 = date('H:i', strtotime('-5 minute', strtotime($date5)));
-            $date7 = date('H:i', strtotime('-5 minute', strtotime($date6)));
-            $date8 = date('H:i', strtotime('-5 minute', strtotime($date7)));
-            $date9 = date('H:i', strtotime('-5 minute', strtotime($date8)));
-            $date10 = date('H:i', strtotime('-5 minute', strtotime($date9)));
-            $date11 = date('H:i', strtotime('-5 minute', strtotime($date10)));
 
-            array_push($tags, $date11);
-            array_push($tags, $date10);
-            array_push($tags, $date9);
-            array_push($tags, $date8);
-            array_push($tags, $date7);
-            array_push($tags, $date6);
             array_push($tags, $date5);
             array_push($tags, $date4);
             array_push($tags, $date3);
