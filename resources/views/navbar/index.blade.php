@@ -155,10 +155,10 @@
                             beginAtZero: true
                         }
                     },
-                    interaction: {
-                        intersect: false,
-                        mode: 'index',
-                    },
+                    // interaction: {
+                    //     intersect: false,
+                    //     mode: 'index',
+                    // },
                 }
             });
         }
