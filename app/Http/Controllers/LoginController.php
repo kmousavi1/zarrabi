@@ -7,18 +7,14 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class loginController extends Controller
+class LoginController extends Controller
 {
-
     public function index () {
         return view('auth.login');
     }
 
-
     public function userCheck (LoginRequest $request){
-
         $user=User::where([['username','=', $request->username],['password' , '=' , $request->password]])->first();
-
         if ($user) {
             // Success
             Auth::login($user);
@@ -28,8 +24,5 @@ class loginController extends Controller
             $request->session()->flash('status', 'username or password is wrong');
             return redirect()->back();
         }
-
     }
-
-
 }

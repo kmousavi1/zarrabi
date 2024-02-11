@@ -11,14 +11,14 @@
             <div class="collapse navbar-collapse" id="mynavbar">
                 <ul class="navbar-nav me-auto" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
-                                type="button" role="tab" aria-controls="home" aria-selected="true">
+                        <button class="nav-link active" id="live-tab" data-bs-toggle="tab" data-bs-target="#live"
+                                type="button" role="tab" aria-controls="live" aria-selected="true">
                             Live
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#profile"
-                                type="button" role="tab" aria-controls="profile" aria-selected="false">
+                        <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history"
+                                type="button" role="tab" aria-controls="history" aria-selected="false">
                             History
                         </button>
                     </li>
@@ -43,8 +43,8 @@
     </nav>
 
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <div class="row">
+        <div class="tab-pane fade show active" id="live" role="tabpanel" aria-labelledby="live-tab">
+            <div class="row p-5">
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
@@ -77,8 +77,18 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="history-tab">
-            <div class="row">
+        <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+            <div class="row p-5">
+                <div class="mb-4 col-12">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><label for="datetime">Select Date</label></span>
+                        </div>
+                        <input type="datetime-local" id="datetime" name="start_at" class="form-control"
+                               placeholder="date"
+                               aria-describedby="datetime">
+                    </div>
+                </div>
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
@@ -116,27 +126,44 @@
     <script>
         $(document).ready(function () {
             getLiveData();
-            getLiveDataInterval();
-        })
+        });
 
-        async function getLiveDataInterval() {
-            return await new Promise(() => {
+        $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+            let targetTab = $(e.target).attr('aria-controls')
+            console.log('target', targetTab)
+            if (targetTab === 'history') {
+                getHistoryData("", "", "");
+            }
+        });
+
+        async function getLiveData() {
+            console.log('live data');
+            let response = await callApi("live/data", "GET");
+            console.log('getLiveData response', response);
+            response = JSON.parse(response);
+            let data = preparingData(response);
+
+            chartDisplay("chart1", data.labels, data.drilling);
+            chartDisplay("chart2", data.labels, data.pressure);
+            chartDisplay("chart3", data.labels, data.mud);
+
+            await new Promise(() => {
                 setInterval(() => {
                     getLiveData();
                 }, 60000);
             });
         }
 
-        async function getLiveData() {
-            console.log('live data');
-            let response = await callApi("live/data");
-            console.log('getLiveData response', response);
+        async function getHistoryData(date, startTime, endTime) {
+            console.log('history data');
+            let response = await callApi("history/data", "GET");
+            console.log('getHistoryData response', response);
             response = JSON.parse(response);
             let data = preparingData(response);
 
-            chartDisplay("chart1", data.labels, data.drilling)
-            chartDisplay("chart2", data.labels, data.pressure)
-            chartDisplay("chart3", data.labels, data.mud)
+            chartDisplay("chart4", data.labels, data.drilling);
+            chartDisplay("chart5", data.labels, data.pressure);
+            chartDisplay("chart6", data.labels, data.mud);
         }
 
         function chartDisplay(chartId, labels, datasets) {
@@ -154,11 +181,7 @@
                         x: {
                             beginAtZero: true
                         }
-                    },
-                    // interaction: {
-                    //     intersect: false,
-                    //     mode: 'index',
-                    // },
+                    }
                 }
             });
         }
@@ -170,12 +193,12 @@
             }
         }
 
-        async function callApi(url) {
+        async function callApi(url, method) {
             console.log('url', url);
             let result;
             await $.ajax({
                 url: url,
-                method: "GET",
+                method: method,
                 success: function (response) {
                     result = response;
                 }

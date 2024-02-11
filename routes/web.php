@@ -23,9 +23,9 @@ Route::get('/', function () {
 //Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/display_data_history/{start_datetime}/{end_datetime}', [App\Http\Controllers\HomeController::class, 'display_data_history'])->name('display_data_history');
-Route::get('/display_data_history', [App\Http\Controllers\HomeController::class, 'display_data_history_'])->name('display_data_history');
+Route::get('/history/data/{start_datetime}/{end_datetime}', [App\Http\Controllers\HomeController::class, 'display_data_history'])->name('display_data_history');
+Route::get('/history/data', [App\Http\Controllers\HomeController::class, 'historyData'])->name('display_data_history');
 Route::get('/live/data', [App\Http\Controllers\HomeController::class, 'liveData'])->name('display_data_live');
 Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('logout');
-Route::get('/login', [App\Http\Controllers\loginController::class, 'index'])->name('login');
-Route::post('/userCheck', [App\Http\Controllers\loginController::class, 'userCheck'])->name('userCheck');
+Route::get('/login', [App\Http\Controllers\LoginController::class, 'index'])->name('login');
+Route::post('/userCheck', [App\Http\Controllers\LoginController::class, 'userCheck'])->name('userCheck');

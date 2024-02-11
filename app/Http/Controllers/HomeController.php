@@ -62,7 +62,7 @@ class HomeController extends Controller
         echo json_encode($display_data);
     }
 
-    public function display_data_history_()
+    public function historyData()
     {
         $end_datetime = date("Y-m-d H:i:s");
         $start_datetime = date('Y-m-d H:i:s', strtotime('-24 hour', strtotime($end_datetime)));
