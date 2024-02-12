@@ -78,17 +78,43 @@
             </div>
         </div>
         <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-            <div class="row p-5">
-                <div class="mb-4 col-12">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><label for="datetime">Select Date</label></span>
-                        </div>
-                        <input type="datetime-local" id="datetime" name="start_at" class="form-control"
-                               placeholder="date"
-                               aria-describedby="datetime">
+
+            <div class="col-12 col-md-4 d-flex flex-column p-5 pb-1">
+
+                <div class="input-group p-2">
+                    <div class="input-group-prepend w-25">
+                        <span class="input-group-text">Select date</span>
                     </div>
+                    <input type="date" id="date" name="date" class="form-control"
+                           placeholder="date"
+                           aria-describedby="date">
                 </div>
+
+                <div class="input-group p-2">
+                    <div class="input-group-prepend w-25">
+                        <span class="input-group-text">Start time</span>
+                    </div>
+                    <input type="time" id="startTime" name="startTime" class="form-control"
+                           placeholder="start time"
+                           aria-describedby="stime">
+                </div>
+
+                <div class="input-group p-2">
+                    <div class="input-group-prepend w-25">
+                        <span class="input-group-text">End time</span>
+                    </div>
+                    <input type="time" id="endTime" name="endTime" class="form-control"
+                           placeholder="end time"
+                           aria-describedby="etime">
+                </div>
+
+                <div class="p-2">
+                    <button type="button" class="btn btn-primary" onclick="submitFilterData()">submit</button>
+                </div>
+            </div>
+
+            <div class="row p-5">
+
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
@@ -124,6 +150,19 @@
     </div>
 
     <script>
+        function submitFilterData() {
+            let date = $("#date").val();
+            let startTime = $("#startTime").val();
+            let endTime = $("#endTime").val();
+
+            if (endTime < startTime) {
+
+            }
+            console.log('date', date)
+            console.log('startTime', startTime)
+            console.log('endTime', endTime)
+        }
+
         $(document).ready(function () {
             getLiveData();
         });
@@ -132,6 +171,7 @@
             let targetTab = $(e.target).attr('aria-controls')
             console.log('target', targetTab)
             if (targetTab === 'history') {
+
                 getHistoryData("", "", "");
             }
         });

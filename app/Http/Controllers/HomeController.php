@@ -271,4 +271,8 @@ class HomeController extends Controller
         }
         return $tags;
     }
+
+    function filter(Request $request){
+        echo $request;
+    }
 }

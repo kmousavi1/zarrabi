@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,10 +23,12 @@ Route::get('/', function () {
 
 //Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/history/data/{start_datetime}/{end_datetime}', [App\Http\Controllers\HomeController::class, 'display_data_history'])->name('display_data_history');
-Route::get('/history/data', [App\Http\Controllers\HomeController::class, 'historyData'])->name('display_data_history');
-Route::get('/live/data', [App\Http\Controllers\HomeController::class, 'liveData'])->name('display_data_live');
-Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('logout');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/history/data/{start_datetime}/{end_datetime}', [HomeController::class, 'display_data_history'])->name('display_data_history');
+Route::get('/history/data', [HomeController::class, 'historyData'])->name('display_data_history');
+Route::get('/live/data', [HomeController::class, 'liveData'])->name('display_data_live');
+Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
+
+
 Route::get('/login', [App\Http\Controllers\LoginController::class, 'index'])->name('login');
 Route::post('/userCheck', [App\Http\Controllers\LoginController::class, 'userCheck'])->name('userCheck');
