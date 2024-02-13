@@ -38,17 +38,17 @@ class HomeController extends Controller
         return redirect()->route('login');
     }
 
-    public function display_data_history($start_datetime, $end_datetime)
+    public function historyData_($startDate, $endDate)
     {
-        $start_datetime = str_replace('*', ' ', $start_datetime);
-        $end_datetime = str_replace('*', ' ', $end_datetime);
+        $startDate = str_replace('*', ' ', $startDate);
+        $endDate = str_replace('*', ' ', $endDate);
 
-        if (!$start_datetime) {
-            $end_datetime = date("Y-m-d H:i:s");
-            $start_datetime = date('Y-m-d H:i:s', strtotime('-24 hour', strtotime($end_datetime)));
+        if (!$startDate) {
+            $endDate = date("Y-m-d H:i:s");
+            $startDate = date('Y-m-d H:i:s', strtotime('-24 hour', strtotime($endDate)));
         }
 
-        $chartData = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])
+        $chartData = ChartData::whereBetween('datetime', [$startDate, $endDate])
             ->orderBy('datetime', 'DESC')
             ->limit(2000)
             ->get();
@@ -57,7 +57,7 @@ class HomeController extends Controller
             $chartData = $chartData->toArray();
         }
 
-        $tags = $this->getTags($chartData, $end_datetime);
+        $tags = $this->getTags($chartData, $endDate);
         $display_data = $this->getDisplayData($chartData, $tags);
         echo json_encode($display_data);
     }
@@ -270,9 +270,5 @@ class HomeController extends Controller
             array_push($tags, $nowDate);
         }
         return $tags;
-    }
-
-    function filter(Request $request){
-        echo $request;
     }
 }

@@ -19,7 +19,7 @@
                     <li class="nav-item">
                         <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history"
                                 type="button" role="tab" aria-controls="history" aria-selected="false">
-                            History
+                            Playback
                         </button>
                     </li>
                 </ul>
@@ -155,12 +155,18 @@
             let startTime = $("#startTime").val();
             let endTime = $("#endTime").val();
 
-            if (endTime < startTime) {
-
+            if (!date || !startTime || !endTime) {
+                return;
             }
-            console.log('date', date)
-            console.log('startTime', startTime)
-            console.log('endTime', endTime)
+
+            if (endTime < startTime) {
+                return;
+            }
+
+            let startDate = date + "*" + startTime + ":00";
+            let endDate = date + "*" + endTime + ":00";
+
+            getHistoryData(startDate, endDate);
         }
 
         $(document).ready(function () {
@@ -169,17 +175,13 @@
 
         $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
             let targetTab = $(e.target).attr('aria-controls')
-            console.log('target', targetTab)
             if (targetTab === 'history') {
-
-                getHistoryData("", "", "");
+                getHistoryData(null, null);
             }
         });
 
         async function getLiveData() {
-            console.log('live data');
-            let response = await callApi("live/data", "GET");
-            console.log('getLiveData response', response);
+            let response = await callApi("live/data", "GET", null);
             response = JSON.parse(response);
             let data = preparingData(response);
 
@@ -187,16 +189,21 @@
             chartDisplay("chart2", data.labels, data.pressure);
             chartDisplay("chart3", data.labels, data.mud);
 
-            await new Promise(() => {
-                setInterval(() => {
-                    getLiveData();
-                }, 60000);
-            });
+            // await new Promise(() => {
+            //     setInterval(() => {
+            //         getLiveData();
+            //     }, 60000);
+            // });
         }
 
-        async function getHistoryData(date, startTime, endTime) {
-            console.log('history data');
-            let response = await callApi("history/data", "GET");
+        async function getHistoryData(startDate, endDate) {
+            let response;
+            if (startDate) {
+                response = await callApi("history/data/" + startDate + "/" + endDate, "GET");
+            } else {
+                response = await callApi("history/data", "GET");
+            }
+
             console.log('getHistoryData response', response);
             response = JSON.parse(response);
             let data = preparingData(response);
@@ -218,8 +225,16 @@
                 options: {
                     indexAxis: 'y',
                     scales: {
-                        x: {
-                            beginAtZero: true
+                    },
+                    plugins:{
+                        legend: {
+                            display: true,
+                            position: 'bottom'
+                        }
+                    },
+                    elements: {
+                        point:{
+                            radius: 0
                         }
                     }
                 }
@@ -234,7 +249,6 @@
         }
 
         async function callApi(url, method) {
-            console.log('url', url);
             let result;
             await $.ajax({
                 url: url,
