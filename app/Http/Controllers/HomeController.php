@@ -137,14 +137,21 @@ class HomeController extends Controller
             "HKLD" => "#456349"
         );
 
-        return array("SURFRPM" => $SURFRPM,
+        $dataSet = array(
+            "SURFRPM" => $SURFRPM,
             "WOB" => $WOB,
             "BITRPM" => $BITRPM,
             "TORQ" => $TORQ,
             "BLKPOSCOMP" => $BLKPOSCOMP,
-            "HKLD" => $HKLD,
-            "colors" => $colors
+            "HKLD" => $HKLD
         );
+
+        $options = array(
+            "min" => 0,
+            "max" => 500
+        );
+
+        return ['dataSet' => $dataSet, 'colors' => $colors, 'options' => $options];
     }
 
     private function getPressureChartData($data)
@@ -186,7 +193,7 @@ class HomeController extends Controller
             "FLOWIN" => "#3a523d"
         );
 
-        return array(
+        $dataSet = array(
             "SPP" => $SPP,
             "CSGP" => $CSGP,
             "SPM01" => $SPM01,
@@ -195,6 +202,13 @@ class HomeController extends Controller
             "FLOWIN" => $FLOWIN,
             "colors" => $colors
         );
+
+        $options = array(
+            "min" => 0,
+            "max" => 5000
+        );
+
+        return ['dataSet' => $dataSet, 'colors' => $colors, 'options' => $options];
     }
 
     private function getMudChartData($data)
@@ -221,12 +235,19 @@ class HomeController extends Controller
             "TGAS" => "#bac3cf"
         );
 
-        return array(
+        $dataSet = array(
             "PITACTIVE" => $PITACTIVE,
             "FLOWOUTP" => $FLOWOUTP,
             "TGAS" => $TGAS,
-            "colors"=> $colors
+            "colors" => $colors
         );
+
+        $options = array(
+            "min" => 0,
+            "max" => 600
+        );
+
+        return ['dataSet' => $dataSet, 'colors' => $colors, 'options' => $options];
     }
 
     private function getDisplayData($data, $tags)

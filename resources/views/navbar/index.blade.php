@@ -45,7 +45,7 @@
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="live" role="tabpanel" aria-labelledby="live-tab">
             <div class="row p-5">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="card">
                         <div class="card-header">
                             Drilling Parameter
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="card">
                         <div class="card-header">
                             Pressure Parameter
@@ -65,13 +65,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="card">
                         <div class="card-header">
                             Mud Parameter
                         </div>
                         <div class="card-body">
                             <canvas id="chart3"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">
+
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">TOTAL DEPHT(M)</li>
+                                <li class="list-group-item">BIT DEPHT(M)</li>
+                                <li class="list-group-item">WOH(KLBF)</li>
+                                <li class="list-group-item">WOB(KLBF)</li>
+                                <li class="list-group-item">ROPA(m/h)</li>
+                                <li class="list-group-item">RPM(RPM)</li>
+                                <li class="list-group-item">TQ(KLBF.FT)</li>
+                                <li class="list-group-item">SPP(PSI)</li>
+                                <li class="list-group-item">TG(%)</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -185,9 +205,10 @@
             response = JSON.parse(response);
             let data = preparingData(response);
 
-            chartDisplay("chart1", data.labels, data.drilling);
-            chartDisplay("chart2", data.labels, data.pressure);
-            chartDisplay("chart3", data.labels, data.mud);
+            console.log('data', data)
+            chartDisplay("chart1", data.labels, data.drilling, data.drillingOptions);
+            chartDisplay("chart2", data.labels, data.pressure, data.pressureOptions);
+            chartDisplay("chart3", data.labels, data.mud, data.mudOptions);
 
             // await new Promise(() => {
             //     setInterval(() => {
@@ -208,12 +229,12 @@
             response = JSON.parse(response);
             let data = preparingData(response);
 
-            chartDisplay("chart4", data.labels, data.drilling);
-            chartDisplay("chart5", data.labels, data.pressure);
-            chartDisplay("chart6", data.labels, data.mud);
+            chartDisplay("chart4", data.labels, data.drilling, data.drillingOptions);
+            chartDisplay("chart5", data.labels, data.pressure, data.pressureOptions);
+            chartDisplay("chart6", data.labels, data.mud, data.mudOptions);
         }
 
-        function chartDisplay(chartId, labels, datasets) {
+        function chartDisplay(chartId, labels, datasets, options) {
             chartDestroy(chartId);
             const ctx = document.getElementById(chartId).getContext('2d');
             return new Chart(ctx, {
@@ -225,18 +246,22 @@
                 options: {
                     indexAxis: 'y',
                     scales: {
+                        x: {
+                            min: options.min,
+                            max: options.max
+                        }
                     },
-                    plugins:{
+                    plugins: {
                         legend: {
                             display: true,
                             position: 'bottom'
                         }
                     },
                     elements: {
-                        point:{
-                            radius: 0
+                        point: {
+                            radius: 1
                         }
-                    }
+                    },
                 }
             });
         }
@@ -261,53 +286,66 @@
         }
 
         function preparingData(apiResponse) {
+
             let drillingParameters = apiResponse.drillingParameters;
-            let pressureParameters = apiResponse.pressureParameters;
-            let mudParameters = apiResponse.mudParameters;
+            let drillingData = drillingParameters.dataSet;
+            let drillingColors = drillingParameters.colors;
+            let drillingOptions = drillingParameters.options;
 
             let drillingParameterDatasets = [];
-            for (let key in drillingParameters) {
-                if (key === "colors")
-                    continue;
+            for (let key in drillingData) {
                 let dataset = {
                     label: key,
-                    data: drillingParameters[key],
+                    data: drillingData[key],
                     borderWidth: 1,
-                    borderColor: drillingParameters.colors[key]
+                    borderColor: drillingColors[key]
                 };
                 drillingParameterDatasets.push(dataset);
             }
 
+            let mudParameters = apiResponse.mudParameters;
+            let mudData = mudParameters.dataSet;
+            let mudColors = mudParameters.colors;
+            let mudOptions = mudParameters.options;
+
             let mudParametersDatasets = [];
-            for (let key in mudParameters) {
+            for (let key in mudData) {
                 if (key === "colors")
                     continue;
                 let dataset = {
                     label: key,
-                    data: mudParameters[key],
+                    data: mudData[key],
                     borderWidth: 1,
-                    borderColor: mudParameters.colors[key],
+                    borderColor: mudColors[key],
                 };
                 mudParametersDatasets.push(dataset);
             }
 
+            let pressureParameters = apiResponse.pressureParameters;
+            let pressureData = pressureParameters.dataSet;
+            let pressureColors = pressureParameters.colors;
+            let pressureOptions = pressureParameters.options;
+
             let pressureParametersDatasets = [];
-            for (let key in pressureParameters) {
+            for (let key in pressureData) {
                 if (key === "colors")
                     continue;
                 let dataset = {
                     label: key,
-                    data: pressureParameters[key],
+                    data: pressureData[key],
                     borderWidth: 1,
-                    borderColor: pressureParameters.colors[key]
+                    borderColor: pressureColors[key]
                 };
                 pressureParametersDatasets.push(dataset);
             }
 
             return {
                 "drilling": drillingParameterDatasets,
+                "drillingOptions": drillingOptions,
                 "mud": mudParametersDatasets,
+                "mudOptions": mudOptions,
                 "pressure": pressureParametersDatasets,
+                "pressureOptions": pressureOptions,
                 "labels": apiResponse.tags
             };
         }
