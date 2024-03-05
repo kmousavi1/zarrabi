@@ -210,11 +210,11 @@
             chartDisplay("chart2", data.labels, data.pressure, data.pressureOptions);
             chartDisplay("chart3", data.labels, data.mud, data.mudOptions);
 
-            // await new Promise(() => {
-            //     setInterval(() => {
-            //         getLiveData();
-            //     }, 60000);
-            // });
+            await new Promise(() => {
+                setInterval(() => {
+                    getLiveData();
+                }, 60000);
+            });
         }
 
         async function getHistoryData(startDate, endDate) {
