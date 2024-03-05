@@ -260,7 +260,7 @@ class HomeController extends Controller
         return ['drillingParameters' => $drillingChartData, 'pressureParameters' => $pressureChartData, 'mudParameters' => $mudChartData, 'tags' => $tags];
     }
 
-    private function getTags($data, $endDate)
+    private function getTags($data, $endDate): array
     {
         $tags = [];
         if (count($data) > 0) {
