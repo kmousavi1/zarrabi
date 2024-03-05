@@ -205,7 +205,6 @@
             response = JSON.parse(response);
             let data = preparingData(response);
 
-            console.log('data', data)
             chartDisplay("chart1", data.labels, data.drilling, data.drillingOptions);
             chartDisplay("chart2", data.labels, data.pressure, data.pressureOptions);
             chartDisplay("chart3", data.labels, data.mud, data.mudOptions);
@@ -225,7 +224,6 @@
                 response = await callApi("history/data", "GET");
             }
 
-            console.log('getHistoryData response', response);
             response = JSON.parse(response);
             let data = preparingData(response);
 
