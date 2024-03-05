@@ -55,6 +55,7 @@ class HomeController extends Controller
 
         if (count($chartData) > 0) {
             $chartData = $chartData->toArray();
+            $chartData = array_reverse($chartData);
         }
 
         $tags = $this->getTags($chartData, $endDate);
@@ -283,12 +284,12 @@ class HomeController extends Controller
             $date4 = date('H:i', strtotime('-5 minute', strtotime($date3)));
             $date5 = date('H:i', strtotime('-5 minute', strtotime($date4)));
 
-            array_push($tags, $date5);
-            array_push($tags, $date4);
-            array_push($tags, $date3);
-            array_push($tags, $date2);
-            array_push($tags, $date1);
             array_push($tags, $nowDate);
+            array_push($tags, $date1);
+            array_push($tags, $date2);
+            array_push($tags, $date3);
+            array_push($tags, $date4);
+            array_push($tags, $date5);
         }
         return $tags;
     }
