@@ -175,7 +175,9 @@
             let date = $("#date").val();
             let startTime = $("#startTime").val();
             let endTime = $("#endTime").val();
-
+            console.log('date',date);
+            console.log('startTime',startTime);
+            console.log('endTime',endTime);
             if (!date || !startTime || !endTime) {
                 return;
             }
