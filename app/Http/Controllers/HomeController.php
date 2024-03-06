@@ -292,6 +292,8 @@ class HomeController extends Controller
             array_push($tags, $date3);
             array_push($tags, $date4);
             array_push($tags, $date5);
+
+            $tags = array_reverse($tags);
         }
         return $tags;
     }
