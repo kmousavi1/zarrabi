@@ -215,7 +215,7 @@
             await new Promise(() => {
                 setInterval(() => {
                     getLiveData();
-                }, 60000);
+                }, 10000);
             });
         }
 
