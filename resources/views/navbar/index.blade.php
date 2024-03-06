@@ -46,41 +46,41 @@
         <div class="tab-pane fade show active" id="live" role="tabpanel" aria-labelledby="live-tab">
             <div class="row p-5">
                 <div class="col-md-3">
-                    <div class="card">
+                    <div class="card h-100">
                         <div class="card-header">
                             Drilling Parameter
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="height: 500px">
                             <canvas id="chart1"></canvas>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card">
+                    <div class="card h-100">
                         <div class="card-header">
                             Pressure Parameter
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="height: 500px">
                             <canvas id="chart2"></canvas>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card">
+                    <div class="card h-100">
                         <div class="card-header">
                             Mud Parameter
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="height: 500px">
                             <canvas id="chart3"></canvas>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card">
+                    <div class="card h-100">
                         <div class="card-header">
 
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="height: 500px">
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">TOTAL DEPHT(M)</li>
                                 <li class="list-group-item">BIT DEPHT(M)</li>
@@ -97,6 +97,7 @@
                 </div>
             </div>
         </div>
+
         <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
 
             <div class="col-12 col-md-4 d-flex flex-column p-5 pb-1">
@@ -136,31 +137,31 @@
             <div class="row p-5">
 
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card h-100">
                         <div class="card-header">
                             Drilling Parameter
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="height: 500px">
                             <canvas id="chart4"></canvas>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card h-100">
                         <div class="card-header">
                             Pressure Parameter
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="height: 500px">
                             <canvas id="chart5"></canvas>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card h-100">
                         <div class="card-header">
                             Mud Parameter
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="height: 500px">
                             <canvas id="chart6"></canvas>
                         </div>
                     </div>
@@ -242,6 +243,8 @@
                     datasets: datasets
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     indexAxis: 'y',
                     scales: {
                         x: {

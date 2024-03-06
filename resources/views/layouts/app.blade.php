@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body>
+<body class="min-vh-100">
 
 <div @if(\Request::route()->getName()=="login")
          style="background-image: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)),url({{url('img/background_image_4.jpg')}}); width: 100%; height: 100vh; background-repeat: no-repeat; background-size: cover;"
