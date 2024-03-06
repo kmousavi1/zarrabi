@@ -16,7 +16,10 @@ class APIController extends Controller
     public function last_id()
     {
 
-        $last_id = ChartData::orderBy('id', 'DESC')->get();
+        $last_id = ChartData::orderBy('id', 'DESC')
+            ->limit(1)
+            ->get();
+
         if ($last_id->count() != 0) {
             $last_id = $last_id->pluck('id')[0];
         } else {
