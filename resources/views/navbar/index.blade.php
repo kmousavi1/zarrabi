@@ -171,6 +171,8 @@
     </div>
 
     <script>
+        let intervalId;
+
         function submitFilterData() {
             let date = $("#date").val();
             let startTime = $("#startTime").val();
@@ -194,12 +196,32 @@
 
         $(document).ready(function () {
             getLiveData();
+
+            new Promise(() => {
+                intervalId = setInterval(() => {
+                    getLiveData();
+                }, 10000);
+            });
         });
 
         $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
             let targetTab = $(e.target).attr('aria-controls')
             if (targetTab === 'history') {
                 getHistoryData(null, null);
+                clearInterval(intervalId);
+            }
+        });
+
+        $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+            let targetTab = $(e.target).attr('aria-controls')
+            if (targetTab === 'live') {
+                getLiveData();
+
+                new Promise(() => {
+                    intervalId = setInterval(() => {
+                        getLiveData();
+                    }, 10000);
+                });
             }
         });
 
@@ -211,12 +233,6 @@
             chartDisplay("chart1", data.labels, data.drilling, data.drillingOptions);
             chartDisplay("chart2", data.labels, data.pressure, data.pressureOptions);
             chartDisplay("chart3", data.labels, data.mud, data.mudOptions);
-
-            await new Promise(() => {
-                setInterval(() => {
-                    getLiveData();
-                }, 10000);
-            });
         }
 
         async function getHistoryData(startDate, endDate) {
