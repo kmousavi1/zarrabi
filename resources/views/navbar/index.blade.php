@@ -266,8 +266,8 @@
                     indexAxis: 'y',
                     scales: {
                         x: {
-                            min: options.min,
-                            max: options.max
+                            // min: options.min,
+                            // max: options.max
                         }
                     },
                     plugins: {

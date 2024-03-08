@@ -132,12 +132,12 @@ class HomeController extends Controller
         }
 
         $colors = array(
-            "SURFRPM" => "#e3d1d1",
-            "WOB" => "#c49493",
-            "BITRPM" => "#593130",
-            "TORQ" => "#c2d1c4",
-            "BLKPOSCOMP" => "#9fbfa3",
-            "HKLD" => "#456349"
+            "SURFRPM" => "#16E2F5",
+            "WOB" => "#FFA500",
+            "BITRPM" => "#A747AC7",
+            "TORQ" => "#FF0000",
+            "BLKPOSCOMP" => "#040720",
+            "HKLD" => "#08A04B"
         );
 
         $dataSet = array(
@@ -188,12 +188,12 @@ class HomeController extends Controller
         }
 
         $colors = array(
-            "SPP" => "#41914c",
-            "CSGP" => "#42ad50",
-            "SPM01" => "#90e09a",
-            "SPM02" => "#7e9e82",
-            "SPM03" => "#5f8564",
-            "FLOWIN" => "#3a523d"
+            "SPP" => "#16E2F5",
+            "CSGP" => "#FFA500",
+            "SPM01" => "#A74AC7",
+            "SPM02" => "#FF0000",
+            "SPM03" => "#040720",
+            "FLOWIN" => "#08A04B"
         );
 
         $dataSet = array(
@@ -233,9 +233,9 @@ class HomeController extends Controller
         }
 
         $colors = array(
-            "PITACTIVE" => "#d3e1f5",
-            "FLOWOUTP" => "#a5bbd9",
-            "TGAS" => "#bac3cf"
+            "PITACTIVE" => "#16E2F5",
+            "FLOWOUTP" => "#040720",
+            "TGAS" => "#08A04F"
         );
 
         $dataSet = array(
