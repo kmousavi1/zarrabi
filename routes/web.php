@@ -27,6 +27,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/history/data/{startDate}/{endDate}', [HomeController::class, 'historyData_'])->name('historyData_');
 Route::get('/history/data', [HomeController::class, 'historyData'])->name('historyData');
 Route::get('/live/data', [HomeController::class, 'liveData'])->name('liveData');
+Route::get('/live/latest-data', [HomeController::class, 'getLatestData'])->name('liveData');
 
 
 Route::get('/logout', [HomeController::class, 'logout'])->name('logout');

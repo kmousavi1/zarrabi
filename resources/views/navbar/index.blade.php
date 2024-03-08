@@ -78,19 +78,64 @@
                 <div class="col-md-3">
                     <div class="card h-100">
                         <div class="card-header">
-
+                            Latest Data
                         </div>
                         <div class="card-body" style="height: 500px">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">TOTAL DEPHT(M)</li>
-                                <li class="list-group-item">BIT DEPHT(M)</li>
-                                <li class="list-group-item">WOH(KLBF)</li>
-                                <li class="list-group-item">WOB(KLBF)</li>
-                                <li class="list-group-item">ROPA(m/h)</li>
-                                <li class="list-group-item">RPM(RPM)</li>
-                                <li class="list-group-item">TQ(KLBF.FT)</li>
-                                <li class="list-group-item">SPP(PSI)</li>
-                                <li class="list-group-item">TG(%)</li>
+                                <li class="list-group-item">
+                                    <div class="list-group-item-fixed">
+                                        <strong class="list-group-left">TOTAL DEPHT(M)</strong>
+                                        <span class="list-group-right" id="totalDepht">0</span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="list-group-item-fixed">
+                                        <strong class="list-group-left">BIT DEPHT(M)</strong>
+                                        <span class="list-group-right" id="bitDepht">0</span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="list-group-item-fixed">
+                                        <strong class="list-group-left">WOH(KLBF)</strong>
+                                        <span class="list-group-right" id="woh">0</span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="list-group-item-fixed">
+                                        <strong class="list-group-left">WOB(KLBF)</strong>
+                                        <span class="list-group-right" id="wob">0</span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="list-group-item-fixed">
+                                        <strong class="list-group-left">ROPA(m/h)</strong>
+                                        <span class="list-group-right" id="ropa">0</span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="list-group-item-fixed">
+                                        <strong class="list-group-left">RPM(RPM)</strong>
+                                        <span class="list-group-right" id="rpm">0</span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="list-group-item-fixed">
+                                        <strong class="list-group-left">TQ(KLBF.FT)</strong>
+                                        <span class="list-group-right" id="tq">0</span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="list-group-item-fixed">
+                                        <strong class="list-group-left">SPP(PSI)</strong>
+                                        <span class="list-group-right" id="spp">0</span>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="list-group-item-fixed">
+                                        <strong class="list-group-left">TG(%)</strong>
+                                        <span class="list-group-right text-right" id="tg">0</span>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -177,9 +222,9 @@
             let date = $("#date").val();
             let startTime = $("#startTime").val();
             let endTime = $("#endTime").val();
-            console.log('date',date);
-            console.log('startTime',startTime);
-            console.log('endTime',endTime);
+            console.log('date', date);
+            console.log('startTime', startTime);
+            console.log('endTime', endTime);
             if (!date || !startTime || !endTime) {
                 return;
             }
@@ -196,10 +241,12 @@
 
         $(document).ready(function () {
             getLiveData();
+            getLatestData();
 
             new Promise(() => {
                 intervalId = setInterval(() => {
                     getLiveData();
+                    getLatestData();
                 }, 10000);
             });
         });
@@ -216,10 +263,12 @@
             let targetTab = $(e.target).attr('aria-controls')
             if (targetTab === 'live') {
                 getLiveData();
+                getLatestData();
 
                 new Promise(() => {
                     intervalId = setInterval(() => {
                         getLiveData();
+                        getLatestData();
                     }, 10000);
                 });
             }
@@ -249,59 +298,6 @@
             chartDisplay("chart4", data.labels, data.drilling, data.drillingOptions);
             chartDisplay("chart5", data.labels, data.pressure, data.pressureOptions);
             chartDisplay("chart6", data.labels, data.mud, data.mudOptions);
-        }
-
-        function chartDisplay(chartId, labels, datasets, options) {
-            chartDestroy(chartId);
-            const ctx = document.getElementById(chartId).getContext('2d');
-            return new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: datasets
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    indexAxis: 'y',
-                    scales: {
-                        x: {
-                            // min: options.min,
-                            // max: options.max
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'bottom'
-                        }
-                    },
-                    elements: {
-                        point: {
-                            radius: 1
-                        }
-                    },
-                }
-            });
-        }
-
-        function chartDestroy(chartId) {
-            let chart = Chart.getChart(chartId);
-            if (chart) {
-                chart.destroy();
-            }
-        }
-
-        async function callApi(url, method) {
-            let result;
-            await $.ajax({
-                url: url,
-                method: method,
-                success: function (response) {
-                    result = response;
-                }
-            });
-            return result;
         }
 
         function preparingData(apiResponse) {
@@ -367,6 +363,106 @@
                 "pressureOptions": pressureOptions,
                 "labels": apiResponse.tags
             };
+        }
+
+        function chartDisplay(chartId, labels, datasets, options) {
+            chartDestroy(chartId);
+            const ctx = document.getElementById(chartId).getContext('2d');
+            return new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            min: options.min,
+                            // max: options.max
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                    },
+                    hover: {
+                        mode: 'index',
+                        intersec: false
+                    },
+                    elements: {
+                        point: {
+                            radius: 1
+                        }
+                    },
+                    transitions: {
+                        show: {
+                            animations: {
+                                x: {
+                                    from: 0
+                                },
+                                y: {
+                                    from: 0
+                                }
+                            }
+                        },
+                        hide: {
+                            animations: {
+                                x: {
+                                    to: 0
+                                },
+                                y: {
+                                    to: 0
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function chartDestroy(chartId) {
+            let chart = Chart.getChart(chartId);
+            if (chart) {
+                chart.destroy();
+            }
+        }
+
+        async function getLatestData() {
+            let response = await callApi("live/latest-data", "GET", null);
+            if(response){
+                response = JSON.parse(response);
+                console.log('res', response);
+                // $("#totalDepht").text(response.BITRPM);
+                // $("#bitDepht").text(response.FLOWOUTP);
+                // $("#woh").text(response.BITRPM);
+                $("#wob").text(response.WOB);
+                // $("#ropa").text(response.BITRPM);
+                // $("#rpm").text(response.BITRPM);
+                // $("#tq").text(response.BITRPM);
+                // $("#spp").text(response.BITRPM);
+                // $("#tg").text(response.BITRPM);
+            }
+        }
+
+        async function callApi(url, method) {
+            let result;
+            await $.ajax({
+                url: url,
+                method: method,
+                success: function (response) {
+                    result = response;
+                }
+            });
+            return result;
         }
     </script>
 @endsection
