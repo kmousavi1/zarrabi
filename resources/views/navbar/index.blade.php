@@ -78,63 +78,45 @@
                 <div class="col-md-3">
                     <div class="card h-100">
                         <div class="card-header">
-                            Latest Data
+                            Data
                         </div>
                         <div class="card-body" style="height: 500px">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <div class="list-group-item-fixed">
-                                        <strong class="list-group-left">TOTAL DEPHT(M)</strong>
-                                        <span class="list-group-right" id="totalDepht">0</span>
-                                    </div>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong class="list-group-left">TOTAL DEPTH(M)</strong>
+                                    <span class="badge bg-primary rounded-pill" id="totalDepth">0</span>
                                 </li>
-                                <li class="list-group-item">
-                                    <div class="list-group-item-fixed">
-                                        <strong class="list-group-left">BIT DEPHT(M)</strong>
-                                        <span class="list-group-right" id="bitDepht">0</span>
-                                    </div>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong class="list-group-left">BIT DEPTH(M)</strong>
+                                    <span class="badge bg-primary rounded-pill" id="bitDepth">0</span>
                                 </li>
-                                <li class="list-group-item">
-                                    <div class="list-group-item-fixed">
-                                        <strong class="list-group-left">WOH(KLBF)</strong>
-                                        <span class="list-group-right" id="woh">0</span>
-                                    </div>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong class="list-group-left">WOH(KLBF)</strong>
+                                    <span class="badge bg-primary rounded-pill" id="woh">0</span>
                                 </li>
-                                <li class="list-group-item">
-                                    <div class="list-group-item-fixed">
-                                        <strong class="list-group-left">WOB(KLBF)</strong>
-                                        <span class="list-group-right" id="wob">0</span>
-                                    </div>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong class="list-group-left">WOB(KLBF)</strong>
+                                    <span class="badge bg-primary rounded-pill" id="wob">0</span>
                                 </li>
-                                <li class="list-group-item">
-                                    <div class="list-group-item-fixed">
-                                        <strong class="list-group-left">ROPA(m/h)</strong>
-                                        <span class="list-group-right" id="ropa">0</span>
-                                    </div>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong class="list-group-left">ROPA(m/h)</strong>
+                                    <span class="badge bg-primary rounded-pill" id="ropa">0</span>
                                 </li>
-                                <li class="list-group-item">
-                                    <div class="list-group-item-fixed">
-                                        <strong class="list-group-left">RPM(RPM)</strong>
-                                        <span class="list-group-right" id="rpm">0</span>
-                                    </div>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong class="list-group-left">RPM(RPM)</strong>
+                                    <span class="badge bg-primary rounded-pill" id="rpm">0</span>
                                 </li>
-                                <li class="list-group-item">
-                                    <div class="list-group-item-fixed">
-                                        <strong class="list-group-left">TQ(KLBF.FT)</strong>
-                                        <span class="list-group-right" id="tq">0</span>
-                                    </div>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong class="list-group-left">TQ(KLBF.FT)</strong>
+                                    <span class="badge bg-primary rounded-pill" id="tq">0</span>
                                 </li>
-                                <li class="list-group-item">
-                                    <div class="list-group-item-fixed">
-                                        <strong class="list-group-left">SPP(PSI)</strong>
-                                        <span class="list-group-right" id="spp">0</span>
-                                    </div>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong class="list-group-left">SPP(PSI)</strong>
+                                    <span class="badge bg-primary rounded-pill" id="spp">0</span>
                                 </li>
-                                <li class="list-group-item">
-                                    <div class="list-group-item-fixed">
-                                        <strong class="list-group-left">TG(%)</strong>
-                                        <span class="list-group-right text-right" id="tg">0</span>
-                                    </div>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong class="list-group-left">TG(%)</strong>
+                                    <span class="badge bg-primary rounded-pill" id="tg">0</span>
                                 </li>
                             </ul>
                         </div>
@@ -148,7 +130,7 @@
             <div class="col-12 col-md-4 d-flex flex-column p-5 pb-1">
 
                 <div class="input-group p-2">
-                    <div class="input-group-prepend w-25">
+                    <div class="input-group-prepend w-30">
                         <span class="input-group-text">Select date</span>
                     </div>
                     <input type="date" id="date" name="date" class="form-control"
@@ -157,7 +139,7 @@
                 </div>
 
                 <div class="input-group p-2">
-                    <div class="input-group-prepend w-25">
+                    <div class="input-group-prepend w-30">
                         <span class="input-group-text">Start time</span>
                     </div>
                     <input type="time" id="startTime" name="startTime" class="form-control"
@@ -166,7 +148,7 @@
                 </div>
 
                 <div class="input-group p-2">
-                    <div class="input-group-prepend w-25">
+                    <div class="input-group-prepend w-30">
                         <span class="input-group-text">End time</span>
                     </div>
                     <input type="time" id="endTime" name="endTime" class="form-control"
@@ -382,6 +364,21 @@
                         x: {
                             min: options.min,
                             // max: options.max
+                        },
+                        y: {
+                            // type: 'time',
+                            // ticks: {
+                            //     // forces step size to be 50 units
+                            //     stepSize: 5
+                            // },
+                            // time: {
+                            //     unit: 'minute',
+                            //     stepSize: 5,
+                            //     displayFormats: {
+                            //         minute: 'HH:mm'
+                            //     },
+                            //     tooltipFormat: 'HH:mm'
+                            // }
                         }
                     },
                     plugins: {
@@ -438,18 +435,18 @@
 
         async function getLatestData() {
             let response = await callApi("live/latest-data", "GET", null);
-            if(response){
+            if (response) {
                 response = JSON.parse(response);
-                console.log('res', response);
-                // $("#totalDepht").text(response.BITRPM);
-                // $("#bitDepht").text(response.FLOWOUTP);
-                // $("#woh").text(response.BITRPM);
+
+                // $("#totalDepth").text(response.DEPTVD);
+                // $("#bitDepth").text(response.DEPBITTVD);
+                $("#woh").text(response.HKLD);
                 $("#wob").text(response.WOB);
-                // $("#ropa").text(response.BITRPM);
-                // $("#rpm").text(response.BITRPM);
-                // $("#tq").text(response.BITRPM);
-                // $("#spp").text(response.BITRPM);
-                // $("#tg").text(response.BITRPM);
+                // $("#ropa").text(response.ROPA);
+                $("#rpm").text(response.SURFRPM);
+                $("#tq").text(response.TORQ);
+                $("#spp").text(response.SPP);
+                $("#tg").text(response.TGAS);
             }
         }
 
