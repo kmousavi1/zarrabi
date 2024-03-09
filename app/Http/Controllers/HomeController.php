@@ -133,44 +133,44 @@ class HomeController extends Controller
         if (count($data) > 0) {
             $SURFRPM = array_map(function ($object) {
                 $value = round($object->SURFRPM, 5);
-                if ($value > 150) {
-                    $value = 150;
-                }
+//                if ($value > 150) {
+//                    $value = 150;
+//                }
                 return $value;
             }, $data);
             $WOB = array_map(function ($object) {
                 $value = round($object->WOB, 5);
-                if ($value > 70) {
-                    $value = 70;
-                }
+//                if ($value > 70) {
+//                    $value = 70;
+//                }
                 return $value;
             }, $data);
             $BITRPM = array_map(function ($object) {
                 $value = round($object->BITRPM, 5);
-                if ($value > 300) {
-                    $value = 300;
-                }
+//                if ($value > 300) {
+//                    $value = 300;
+//                }
                 return $value;
             }, $data);
             $TORQ = array_map(function ($object) {
                 $value = round($object->TORQ, 5);
-                if ($value > 60) {
-                    $value = 60;
-                }
+//                if ($value > 60) {
+//                    $value = 60;
+//                }
                 return $value;
             }, $data);
             $BLKPOSCOMP = array_map(function ($object) {
                 $value = round($object->BLKPOSCOMP, 5);
-                if ($value > 40) {
-                    $value = 40;
-                }
+//                if ($value > 40) {
+//                    $value = 40;
+//                }
                 return $value;
             }, $data);
             $HKLD = array_map(function ($object) {
                 $value = round($object->HKLD, 5);
-                if ($value > 500) {
-                    $value = 500;
-                }
+//                if ($value > 500) {
+//                    $value = 500;
+//                }
                 return $value;
             }, $data);
         } else {
@@ -213,44 +213,44 @@ class HomeController extends Controller
         if (count($data) > 0) {
             $SPP = array_map(function ($object) {
                 $value = round($object->SPP, 5);
-                if ($value > 3000) {
-                    $value = 3000;
-                }
+//                if ($value > 3000) {
+//                    $value = 3000;
+//                }
                 return $value;
             }, $data);
             $CSGP = array_map(function ($object) {
                 $value = round($object->CSGP, 5);
-                if ($value > 5000) {
-                    $value = 5000;
-                }
+//                if ($value > 5000) {
+//                    $value = 5000;
+//                }
                 return $value;
             }, $data);
             $SPM01 = array_map(function ($object) {
                 $value = round($object->SPM01, 5);
-                if ($value > 70) {
-                    $value = 70;
-                }
+//                if ($value > 70) {
+//                    $value = 70;
+//                }
                 return $value;
             }, $data);
             $SPM02 = array_map(function ($object) {
                 $value = round($object->SPM02, 5);
-                if ($value > 70) {
-                    $value = 70;
-                }
+//                if ($value > 70) {
+//                    $value = 70;
+//                }
                 return $value;
             }, $data);
             $SPM03 = array_map(function ($object) {
                 $value = round($object->SPM03, 5);
-                if ($value > 70) {
-                    $value = 70;
-                }
+//                if ($value > 70) {
+//                    $value = 70;
+//                }
                 return $value;
             }, $data);
             $FLOWIN = array_map(function ($object) {
                 $value = round($object->FLOWIN, 5);
-                if ($value > 1000) {
-                    $value = 1000;
-                }
+//                if ($value > 1000) {
+//                    $value = 1000;
+//                }
                 return $value;
             }, $data);
         } else {
@@ -294,23 +294,23 @@ class HomeController extends Controller
         if (count($data) > 0) {
             $PITACTIVE = array_map(function ($object) {
                 $value = round($object->PITACTIVE, 5);
-                if ($value > 600) {
-                    $value = 600;
-                }
+//                if ($value > 600) {
+//                    $value = 600;
+//                }
                 return $value;
             }, $data);
             $FLOWOUTP = array_map(function ($object) {
                 $value = round($object->FLOWOUTP, 5);
-                if ($value > 100) {
-                    $value = 100;
-                }
+//                if ($value > 100) {
+//                    $value = 100;
+//                }
                 return $value;
             }, $data);
             $TGAS = array_map(function ($object) {
                 $value = round($object->TGAS, 5);
-                if ($value > 100) {
-                    $value = 100;
-                }
+//                if ($value > 100) {
+//                    $value = 100;
+//                }
                 return $value;
             }, $data);
         } else {
