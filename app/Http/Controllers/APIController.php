@@ -63,6 +63,10 @@ class APIController extends Controller
                 $chart->FLOWOUTP = $data['FLOWOUTP'];
                 $chart->TGAS = $data['TGAS'];
 
+                $chart->ROPA = $data['ROPA'];
+                $chart->DEPTVD = $data['DEPTVD'];
+                $chart->DEPBITTVD = $data['DEPBITTVD'];
+
                 try {
                     $chart->save();
                 } catch (\Exception $e) {

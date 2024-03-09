@@ -35,6 +35,10 @@ return new class extends Migration
             $table->double('FLOWOUTP')->nullable();
             $table->double('TGAS')->nullable();
 
+            $table->double('ROPA')->nullable();
+            $table->double('DEPTVD')->nullable();
+            $table->double('DEPBITTVD')->nullable();
+
             $table->datetime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->datetime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });

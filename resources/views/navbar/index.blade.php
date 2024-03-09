@@ -367,10 +367,12 @@
                         },
                         y: {
                             // type: 'time',
-                            // ticks: {
-                            //     // forces step size to be 50 units
-                            //     stepSize: 5
-                            // },
+                            ticks: {
+                                // forces step size to be 50 units
+                                // stepSize: 5,
+                                // autoSkip: true,
+                                // maxTicksLimit: 10
+                            },
                             // time: {
                             //     unit: 'minute',
                             //     stepSize: 5,
@@ -393,35 +395,35 @@
                     },
                     hover: {
                         mode: 'index',
-                        intersec: false
+                        intersect: false
                     },
                     elements: {
                         point: {
                             radius: 1
                         }
                     },
-                    transitions: {
-                        show: {
-                            animations: {
-                                x: {
-                                    from: 0
-                                },
-                                y: {
-                                    from: 0
-                                }
-                            }
-                        },
-                        hide: {
-                            animations: {
-                                x: {
-                                    to: 0
-                                },
-                                y: {
-                                    to: 0
-                                }
-                            }
-                        }
-                    }
+                    // transitions: {
+                    //     show: {
+                    //         animations: {
+                    //             x: {
+                    //                 from: 0
+                    //             },
+                    //             y: {
+                    //                 from: 0
+                    //             }
+                    //         }
+                    //     },
+                    //     hide: {
+                    //         animations: {
+                    //             x: {
+                    //                 to: 0
+                    //             },
+                    //             y: {
+                    //                 to: 0
+                    //             }
+                    //         }
+                    //     }
+                    // }
                 }
             });
         }
@@ -438,11 +440,11 @@
             if (response) {
                 response = JSON.parse(response);
 
-                // $("#totalDepth").text(response.DEPTVD);
-                // $("#bitDepth").text(response.DEPBITTVD);
+                $("#totalDepth").text(response.DEPTVD);
+                $("#bitDepth").text(response.DEPBITTVD);
                 $("#woh").text(response.HKLD);
                 $("#wob").text(response.WOB);
-                // $("#ropa").text(response.ROPA);
+                $("#ropa").text(response.ROPA);
                 $("#rpm").text(response.SURFRPM);
                 $("#tq").text(response.TORQ);
                 $("#spp").text(response.SPP);

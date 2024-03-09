@@ -13,5 +13,6 @@ class ChartData extends Model
 
     protected $fillable=['id','date','time','datetime','BLKPOSCOMP','HKLD','WOB','TORQ','SURFRPM','BITRPM',
         'SPP','CSGP','SPM01','SPM02','SPM03','FLOWIN',
-        'PITACTIVE','FLOWOUTP','TGAS'];
+        'PITACTIVE','FLOWOUTP','TGAS',
+        'ROPA','DEPTVD','DEPBITTVD'];
 }

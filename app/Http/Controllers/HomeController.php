@@ -8,6 +8,7 @@ use App\Models\Chart3;
 use App\Models\ChartData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -38,6 +39,27 @@ class HomeController extends Controller
         return redirect()->route('login');
     }
 
+    public function getChartData($startDate, $endDate)
+    {
+        $bindings = [
+            'startDate' => $startDate,
+            'endDate' => $endDate
+        ];
+
+        return DB::select('
+        WITH T AS (
+        SELECT
+            ROW_NUMBER() OVER(PARTITION BY CAST(`datetime` AS DATE), HOUR(`datetime`), MINUTE(`datetime`) ORDER BY `datetime` DESC) AS RW,`datetime`,
+            SURFRPM, WOB, BITRPM, TORQ, BLKPOSCOMP, HKLD,
+            SPP, CSGP, SPM01, SPM02, SPM03, FLOWIN,
+            PITACTIVE, FLOWOUTP, TGAS FROM `chartdata`
+            WHERE `datetime` BETWEEN :startDate AND :endDate
+            ORDER BY `datetime` DESC
+        )
+        SELECT * FROM T WHERE RW = 1;
+        ', $bindings);
+    }
+
     public function historyData_($startDate, $endDate)
     {
         $startDate = str_replace('*', ' ', $startDate);
@@ -48,13 +70,14 @@ class HomeController extends Controller
             $startDate = date('Y-m-d H:i:s', strtotime('-24 hour', strtotime($endDate)));
         }
 
-        $chartData = ChartData::whereBetween('datetime', [$startDate, $endDate])
-            ->orderBy('datetime', 'DESC')
-            ->limit(2000)
-            ->get();
+        /*$chartData = ChartData::whereBetween('datetime', [$startDate, $endDate])
+                    ->orderBy('datetime', 'DESC')
+                    ->get();*/
+
+        $chartData = $this->getChartData($startDate, $endDate);
 
         if (count($chartData) > 0) {
-            $chartData = $chartData->toArray();
+//            $chartData = $chartData->toArray();
             $chartData = array_reverse($chartData);
         }
 
@@ -68,12 +91,14 @@ class HomeController extends Controller
         $end_datetime = date("Y-m-d H:i:s");
         $start_datetime = date('Y-m-d H:i:s', strtotime('-24 hour', strtotime($end_datetime)));
 
-        $chartData = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])
+        /*$chartData = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])
             ->orderBy('datetime', 'DESC')
-            ->limit(2000)
-            ->get();
+            ->get();*/
+
+        $chartData = $this->getChartData($start_datetime, $end_datetime);
+
         if (count($chartData) > 0) {
-            $chartData = $chartData->toArray();
+//            $chartData = $chartData->toArray();
             $chartData = array_reverse($chartData);
         }
 
@@ -87,12 +112,14 @@ class HomeController extends Controller
         $end_datetime = date("Y-m-d H:i:s");
         $start_datetime = date('Y-m-d H:i:s', strtotime('-30 minute', strtotime($end_datetime)));
 
-        $chartData = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])
+        /*$chartData = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])
             ->orderBy('datetime', 'DESC')
-            ->get();
+            ->get();*/
+
+        $chartData = $this->getChartData($start_datetime, $end_datetime);
 
         if (count($chartData) > 0) {
-            $chartData = $chartData->toArray();
+//            $chartData = $chartData->toArray();
             $chartData = array_reverse($chartData);
         }
 
@@ -105,42 +132,42 @@ class HomeController extends Controller
     {
         if (count($data) > 0) {
             $SURFRPM = array_map(function ($object) {
-                $value = round($object['SURFRPM'], 5);
+                $value = round($object->SURFRPM, 5);
                 if ($value > 150) {
                     $value = 150;
                 }
                 return $value;
             }, $data);
             $WOB = array_map(function ($object) {
-                $value = round($object['WOB'], 5);
+                $value = round($object->WOB, 5);
                 if ($value > 70) {
                     $value = 70;
                 }
                 return $value;
             }, $data);
             $BITRPM = array_map(function ($object) {
-                $value = round($object['BITRPM'], 5);
+                $value = round($object->BITRPM, 5);
                 if ($value > 300) {
                     $value = 300;
                 }
                 return $value;
             }, $data);
             $TORQ = array_map(function ($object) {
-                $value = round($object['TORQ'], 5);
+                $value = round($object->TORQ, 5);
                 if ($value > 60) {
                     $value = 60;
                 }
                 return $value;
             }, $data);
             $BLKPOSCOMP = array_map(function ($object) {
-                $value = round($object['BLKPOSCOMP'], 5);
+                $value = round($object->BLKPOSCOMP, 5);
                 if ($value > 40) {
                     $value = 40;
                 }
                 return $value;
             }, $data);
             $HKLD = array_map(function ($object) {
-                $value = round($object['HKLD'], 5);
+                $value = round($object->HKLD, 5);
                 if ($value > 500) {
                     $value = 500;
                 }
@@ -185,42 +212,42 @@ class HomeController extends Controller
     {
         if (count($data) > 0) {
             $SPP = array_map(function ($object) {
-                $value = round($object['SPP'], 5);
+                $value = round($object->SPP, 5);
                 if ($value > 3000) {
                     $value = 3000;
                 }
                 return $value;
             }, $data);
             $CSGP = array_map(function ($object) {
-                $value = round($object['CSGP'], 5);
+                $value = round($object->CSGP, 5);
                 if ($value > 5000) {
                     $value = 5000;
                 }
                 return $value;
             }, $data);
             $SPM01 = array_map(function ($object) {
-                $value = round($object['SPM01'], 5);
+                $value = round($object->SPM01, 5);
                 if ($value > 70) {
                     $value = 70;
                 }
                 return $value;
             }, $data);
             $SPM02 = array_map(function ($object) {
-                $value = round($object['SPM02'], 5);
+                $value = round($object->SPM02, 5);
                 if ($value > 70) {
                     $value = 70;
                 }
                 return $value;
             }, $data);
             $SPM03 = array_map(function ($object) {
-                $value = round($object['SPM03'], 5);
+                $value = round($object->SPM03, 5);
                 if ($value > 70) {
                     $value = 70;
                 }
                 return $value;
             }, $data);
             $FLOWIN = array_map(function ($object) {
-                $value = round($object['FLOWIN'], 5);
+                $value = round($object->FLOWIN, 5);
                 if ($value > 1000) {
                     $value = 1000;
                 }
@@ -266,21 +293,21 @@ class HomeController extends Controller
     {
         if (count($data) > 0) {
             $PITACTIVE = array_map(function ($object) {
-                $value = round($object['PITACTIVE'], 5);
+                $value = round($object->PITACTIVE, 5);
                 if ($value > 600) {
                     $value = 600;
                 }
                 return $value;
             }, $data);
             $FLOWOUTP = array_map(function ($object) {
-                $value = round($object['FLOWOUTP'], 5);
+                $value = round($object->FLOWOUTP, 5);
                 if ($value > 100) {
                     $value = 100;
                 }
                 return $value;
             }, $data);
             $TGAS = array_map(function ($object) {
-                $value = round($object['TGAS'], 5);
+                $value = round($object->TGAS, 5);
                 if ($value > 100) {
                     $value = 100;
                 }
@@ -324,10 +351,11 @@ class HomeController extends Controller
 
     private function getTags($data, $endDate): array
     {
+        $dataCount = count($data);
         $tags = [];
-        if (count($data) > 0) {
+        if ($dataCount > 0) {
             foreach ($data as $d) {
-                $str = $d['datetime'];
+                $str = $d->datetime;
                 $time = substr($str, 11, 5);
                 array_push($tags, $time);
             }
@@ -363,12 +391,21 @@ class HomeController extends Controller
         $chartData = ChartData::orderBy('datetime', 'DESC')
             ->first();
 
+        $chartData["DEPTVD"] = round($chartData["DEPTVD"], 5);
+        if ($chartData["DEPTVD"] < 0)
+            $chartData["DEPTVD"] = 0;
+        $chartData["DEPBITTVD"] = round($chartData["DEPBITTVD"], 5);
+        if ($chartData["DEPBITTVD"] < 0)
+            $chartData["DEPBITTVD"] = 0;
         $chartData["HKLD"] = round($chartData["HKLD"], 5);
         if ($chartData["HKLD"] < 0)
             $chartData["HKLD"] = 0;
         $chartData["WOB"] = round($chartData["WOB"], 5);
         if ($chartData["WOB"] < 0)
             $chartData["WOB"] = 0;
+        $chartData["ROPA"] = round($chartData["ROPA"], 5);
+        if ($chartData["ROPA"] < 0)
+            $chartData["ROPA"] = 0;
         $chartData["SURFRPM"] = round($chartData["SURFRPM"], 5);
         if ($chartData["SURFRPM"] < 0)
             $chartData["SURFRPM"] = 0;
@@ -381,15 +418,6 @@ class HomeController extends Controller
         $chartData["TGAS"] = round($chartData["TGAS"], 5);
         if ($chartData["TGAS"] < 0)
             $chartData["TGAS"] = 0;
-
-//        $chartData["BITRPM"] = round($chartData["BITRPM"],5);
-//        $chartData["BLKPOSCOMP"] = round($chartData["BLKPOSCOMP"],5);
-//        $chartData["CSGP"] = round($chartData["CSGP"],5);
-//        $chartData["FLOWIN"] = round($chartData["FLOWIN"],5);
-//        $chartData["FLOWOUTP"] = round($chartData["FLOWOUTP"],5);
-//        $chartData["SPM01"] = round($chartData["SPM01"],5);
-//        $chartData["SPM02"] = round($chartData["SPM02"],5);
-//        $chartData["SPM03"] = round($chartData["SPM03"],5);
 
         echo json_encode($chartData);
     }
