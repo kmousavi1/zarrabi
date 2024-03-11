@@ -16,20 +16,18 @@ class APIController extends Controller
     public function last_id()
     {
 
-        $last_id = ChartData::orderBy('id', 'DESC')
-            ->limit(1)
-            ->get();
+        $chartData = ChartData::orderBy('id', 'DESC')
+            ->first();
 
-        if ($last_id->count() != 0) {
-            $last_id = $last_id->pluck('id')[0];
-        } else {
-            $last_id = 0;
+        $lastId = 0;
+        if ($chartData && $chartData->id){
+            $lastId = $chartData->id;
         }
 
         $data = [
             'status' => true,
             'message' => 'شناسه آخر با موفقیت خوانده شد',
-            'last_id' => $last_id
+            'last_id' => $lastId
         ];
         return response()->json($data, 200, [], JSON_UNESCAPED_UNICODE);
     }
