@@ -132,42 +132,43 @@ class HomeController extends Controller
     {
         if (count($data) > 0) {
             $SURFRPM = array_map(function ($object) {
-                $value = round($object->SURFRPM, 5);
+                $value = round($object->SURFRPM, 2);
 //                if ($value > 150) {
 //                    $value = 150;
 //                }
                 return $value;
             }, $data);
             $WOB = array_map(function ($object) {
-                $value = round($object->WOB, 5);
+                $value = round($object->WOB, 2);
 //                if ($value > 70) {
 //                    $value = 70;
 //                }
                 return $value;
             }, $data);
             $BITRPM = array_map(function ($object) {
-                $value = round($object->BITRPM, 5);
+                $value = round($object->BITRPM, 2);
 //                if ($value > 300) {
 //                    $value = 300;
 //                }
                 return $value;
             }, $data);
             $TORQ = array_map(function ($object) {
-                $value = round($object->TORQ, 5);
+                $value = round($object->TORQ, 2);
 //                if ($value > 60) {
 //                    $value = 60;
 //                }
                 return $value;
             }, $data);
             $BLKPOSCOMP = array_map(function ($object) {
-                $value = round($object->BLKPOSCOMP, 5);
+                $value = round($object->BLKPOSCOMP, 2);
 //                if ($value > 40) {
 //                    $value = 40;
 //                }
                 return $value;
             }, $data);
             $HKLD = array_map(function ($object) {
-                $value = round($object->HKLD, 5);
+                $value = $object->HKLD / 4500;
+                $value = round($value, 2);
 //                if ($value > 500) {
 //                    $value = 500;
 //                }
@@ -212,42 +213,42 @@ class HomeController extends Controller
     {
         if (count($data) > 0) {
             $SPP = array_map(function ($object) {
-                $value = round($object->SPP, 5);
+                $value = round($object->SPP, 2);
 //                if ($value > 3000) {
 //                    $value = 3000;
 //                }
                 return $value;
             }, $data);
             $CSGP = array_map(function ($object) {
-                $value = round($object->CSGP, 5);
+                $value = round($object->CSGP, 2);
 //                if ($value > 5000) {
 //                    $value = 5000;
 //                }
                 return $value;
             }, $data);
             $SPM01 = array_map(function ($object) {
-                $value = round($object->SPM01, 5);
+                $value = round($object->SPM01, 2);
 //                if ($value > 70) {
 //                    $value = 70;
 //                }
                 return $value;
             }, $data);
             $SPM02 = array_map(function ($object) {
-                $value = round($object->SPM02, 5);
+                $value = round($object->SPM02, 2);
 //                if ($value > 70) {
 //                    $value = 70;
 //                }
                 return $value;
             }, $data);
             $SPM03 = array_map(function ($object) {
-                $value = round($object->SPM03, 5);
+                $value = round($object->SPM03, 2);
 //                if ($value > 70) {
 //                    $value = 70;
 //                }
                 return $value;
             }, $data);
             $FLOWIN = array_map(function ($object) {
-                $value = round($object->FLOWIN, 5);
+                $value = round($object->FLOWIN, 2);
 //                if ($value > 1000) {
 //                    $value = 1000;
 //                }
@@ -293,21 +294,23 @@ class HomeController extends Controller
     {
         if (count($data) > 0) {
             $PITACTIVE = array_map(function ($object) {
-                $value = round($object->PITACTIVE, 5);
+                $value = $object->PITACTIVE * 6.289;
+                $value = round($value, 2);
 //                if ($value > 600) {
 //                    $value = 600;
 //                }
                 return $value;
             }, $data);
             $FLOWOUTP = array_map(function ($object) {
-                $value = round($object->FLOWOUTP, 5);
+                $value = $object->FLOWOUTP * 100;
+                $value = round($value, 2);
 //                if ($value > 100) {
 //                    $value = 100;
 //                }
                 return $value;
             }, $data);
             $TGAS = array_map(function ($object) {
-                $value = round($object->TGAS, 5);
+                $value = round($object->TGAS, 2);
 //                if ($value > 100) {
 //                    $value = 100;
 //                }
@@ -356,7 +359,7 @@ class HomeController extends Controller
         if ($dataCount > 0) {
             foreach ($data as $d) {
                 $str = $d->datetime;
-                $time = substr($str, 11, 5);
+                $time = substr($str, 11, 2);
                 array_push($tags, $time);
             }
         } else {
@@ -391,31 +394,35 @@ class HomeController extends Controller
         $chartData = ChartData::orderBy('datetime', 'DESC')
             ->first();
 
-        $chartData["DEPTVD"] = round($chartData["DEPTVD"], 5);
+        $chartData["DEPTVD"] = round($chartData["DEPTVD"], 2);
         if ($chartData["DEPTVD"] < 0)
             $chartData["DEPTVD"] = 0;
-        $chartData["DEPBITTVD"] = round($chartData["DEPBITTVD"], 5);
+        $chartData["DEPBITTVD"] = round($chartData["DEPBITTVD"], 2);
         if ($chartData["DEPBITTVD"] < 0)
             $chartData["DEPBITTVD"] = 0;
-        $chartData["HKLD"] = round($chartData["HKLD"], 5);
+        $chartData["HKLD"] = $chartData["HKLD"] / 4500;
+        $chartData["HKLD"] = round($chartData["HKLD"], 2);
         if ($chartData["HKLD"] < 0)
             $chartData["HKLD"] = 0;
-        $chartData["WOB"] = round($chartData["WOB"], 5);
+        $chartData["WOB"] = $chartData["WOB"] / 4500;
+        $chartData["WOB"] = round($chartData["WOB"], 2);
         if ($chartData["WOB"] < 0)
             $chartData["WOB"] = 0;
-        $chartData["ROPA"] = round($chartData["ROPA"], 5);
+        $chartData["ROPA"] = $chartData["ROPA"] * 3600;
+        $chartData["ROPA"] = round($chartData["ROPA"], 2);
         if ($chartData["ROPA"] < 0)
             $chartData["ROPA"] = 0;
-        $chartData["SURFRPM"] = round($chartData["SURFRPM"], 5);
+        $chartData["SURFRPM"] = round($chartData["SURFRPM"], 2);
         if ($chartData["SURFRPM"] < 0)
             $chartData["SURFRPM"] = 0;
-        $chartData["TORQ"] = round($chartData["TORQ"], 5);
+        $chartData["TORQ"] = round($chartData["TORQ"], 2);
         if ($chartData["TORQ"] < 0)
             $chartData["TORQ"] = 0;
-        $chartData["SPP"] = round($chartData["SPP"], 5);
+        $chartData["SPP"] = round($chartData["SPP"], 2);
         if ($chartData["SPP"] < 0)
             $chartData["SPP"] = 0;
-        $chartData["TGAS"] = round($chartData["TGAS"], 5);
+        $chartData["TGAS"] = round($chartData["TGAS"], 2);
+        $chartData["TGAS"] = $chartData["TGAS"] * 100;
         if ($chartData["TGAS"] < 0)
             $chartData["TGAS"] = 0;
 
