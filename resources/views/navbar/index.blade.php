@@ -84,39 +84,39 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <strong class="list-group-left">TOTAL DEPTH(M)</strong>
-                                    <span class="badge bg-primary rounded-pill" id="totalDepth">0</span>
+                                    <h5><span class="badge bg-primary rounded-pill" id="totalDepth">0</span></h5>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <strong class="list-group-left">BIT DEPTH(M)</strong>
-                                    <span class="badge bg-primary rounded-pill" id="bitDepth">0</span>
+                                    <h5><span class="badge bg-primary rounded-pill" id="bitDepth">0</span></h5>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <strong class="list-group-left">WOH(KLBF)</strong>
-                                    <span class="badge bg-primary rounded-pill" id="woh">0</span>
+                                    <h5><span class="badge bg-primary rounded-pill" id="woh">0</span></h5>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <strong class="list-group-left">WOB(KLBF)</strong>
-                                    <span class="badge bg-primary rounded-pill" id="wob">0</span>
+                                    <h5><span class="badge bg-primary rounded-pill" id="wob">0</span></h5>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <strong class="list-group-left">ROPA(m/h)</strong>
-                                    <span class="badge bg-primary rounded-pill" id="ropa">0</span>
+                                    <h5><span class="badge bg-primary rounded-pill" id="ropa">0</span></h5>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <strong class="list-group-left">RPM(RPM)</strong>
-                                    <span class="badge bg-primary rounded-pill" id="rpm">0</span>
+                                    <h5><span class="badge bg-primary rounded-pill" id="rpm">0</span></h5>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <strong class="list-group-left">TQ(KLBF.FT)</strong>
-                                    <span class="badge bg-primary rounded-pill" id="tq">0</span>
+                                    <h5><span class="badge bg-primary rounded-pill" id="tq">0</span></h5>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <strong class="list-group-left">SPP(PSI)</strong>
-                                    <span class="badge bg-primary rounded-pill" id="spp">0</span>
+                                    <h5><span class="badge bg-primary rounded-pill" id="spp">0</span></h5>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <strong class="list-group-left">TG(%)</strong>
-                                    <span class="badge bg-primary rounded-pill" id="tg">0</span>
+                                    <h5><span class="badge bg-primary rounded-pill" id="tg">0</span></h5>
                                 </li>
                             </ul>
                         </div>

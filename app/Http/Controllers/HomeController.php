@@ -391,7 +391,12 @@ class HomeController extends Controller
 
     public function getLatestData()
     {
-        $chartData = ChartData::orderBy('datetime', 'DESC')
+
+        $end_datetime = date("Y-m-d H:i:s");
+        $start_datetime = date('Y-m-d H:i:s', strtotime('-5 second', strtotime($end_datetime)));
+
+        $chartData = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])
+            ->orderBy('datetime', 'DESC')
             ->first();
 
         $chartData["DEPTVD"] = round($chartData["DEPTVD"], 2);
@@ -421,8 +426,8 @@ class HomeController extends Controller
         $chartData["SPP"] = round($chartData["SPP"], 2);
         if ($chartData["SPP"] < 0)
             $chartData["SPP"] = 0;
-        $chartData["TGAS"] = round($chartData["TGAS"], 2);
         $chartData["TGAS"] = $chartData["TGAS"] * 100;
+        $chartData["TGAS"] = round($chartData["TGAS"], 2);
         if ($chartData["TGAS"] < 0)
             $chartData["TGAS"] = 0;
 
