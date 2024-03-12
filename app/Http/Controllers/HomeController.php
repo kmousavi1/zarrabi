@@ -110,7 +110,7 @@ class HomeController extends Controller
     public function liveData()
     {
         $end_datetime = date("Y-m-d H:i:s");
-        $start_datetime = date('Y-m-d H:i:s', strtotime('-30 minute', strtotime($end_datetime)));
+        $start_datetime = date('Y-m-d H:i:s', strtotime('-15 minute', strtotime($end_datetime)));
 
         /*$chartData = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])
             ->orderBy('datetime', 'DESC')
@@ -393,43 +393,56 @@ class HomeController extends Controller
     {
 
         $end_datetime = date("Y-m-d H:i:s");
-        $start_datetime = date('Y-m-d H:i:s', strtotime('-5 second', strtotime($end_datetime)));
+        $start_datetime = date('Y-m-d H:i:s', strtotime('-15 minute', strtotime($end_datetime)));
 
         $chartData = ChartData::whereBetween('datetime', [$start_datetime, $end_datetime])
             ->orderBy('datetime', 'DESC')
+            ->limit(1)
             ->first();
 
-        $chartData["DEPTVD"] = round($chartData["DEPTVD"], 2);
-        if ($chartData["DEPTVD"] < 0)
+        if ($chartData) {
+            $chartData["DEPTVD"] = round($chartData["DEPTVD"], 2);
+            if ($chartData["DEPTVD"] < 0)
+                $chartData["DEPTVD"] = 0;
+            $chartData["DEPBITTVD"] = round($chartData["DEPBITTVD"], 2);
+            if ($chartData["DEPBITTVD"] < 0)
+                $chartData["DEPBITTVD"] = 0;
+            $chartData["HKLD"] = $chartData["HKLD"] / 4500;
+            $chartData["HKLD"] = round($chartData["HKLD"], 2);
+            if ($chartData["HKLD"] < 0)
+                $chartData["HKLD"] = 0;
+            $chartData["WOB"] = $chartData["WOB"] / 4500;
+            $chartData["WOB"] = round($chartData["WOB"], 2);
+            if ($chartData["WOB"] < 0)
+                $chartData["WOB"] = 0;
+            $chartData["ROPA"] = $chartData["ROPA"] * 3600;
+            $chartData["ROPA"] = round($chartData["ROPA"], 2);
+            if ($chartData["ROPA"] < 0)
+                $chartData["ROPA"] = 0;
+            $chartData["SURFRPM"] = round($chartData["SURFRPM"], 2);
+            if ($chartData["SURFRPM"] < 0)
+                $chartData["SURFRPM"] = 0;
+            $chartData["TORQ"] = round($chartData["TORQ"], 2);
+            if ($chartData["TORQ"] < 0)
+                $chartData["TORQ"] = 0;
+            $chartData["SPP"] = round($chartData["SPP"], 2);
+            if ($chartData["SPP"] < 0)
+                $chartData["SPP"] = 0;
+            $chartData["TGAS"] = $chartData["TGAS"] * 100;
+            $chartData["TGAS"] = round($chartData["TGAS"], 2);
+            if ($chartData["TGAS"] < 0)
+                $chartData["TGAS"] = 0;
+        } else {
             $chartData["DEPTVD"] = 0;
-        $chartData["DEPBITTVD"] = round($chartData["DEPBITTVD"], 2);
-        if ($chartData["DEPBITTVD"] < 0)
             $chartData["DEPBITTVD"] = 0;
-        $chartData["HKLD"] = $chartData["HKLD"] / 4500;
-        $chartData["HKLD"] = round($chartData["HKLD"], 2);
-        if ($chartData["HKLD"] < 0)
             $chartData["HKLD"] = 0;
-        $chartData["WOB"] = $chartData["WOB"] / 4500;
-        $chartData["WOB"] = round($chartData["WOB"], 2);
-        if ($chartData["WOB"] < 0)
             $chartData["WOB"] = 0;
-        $chartData["ROPA"] = $chartData["ROPA"] * 3600;
-        $chartData["ROPA"] = round($chartData["ROPA"], 2);
-        if ($chartData["ROPA"] < 0)
             $chartData["ROPA"] = 0;
-        $chartData["SURFRPM"] = round($chartData["SURFRPM"], 2);
-        if ($chartData["SURFRPM"] < 0)
             $chartData["SURFRPM"] = 0;
-        $chartData["TORQ"] = round($chartData["TORQ"], 2);
-        if ($chartData["TORQ"] < 0)
             $chartData["TORQ"] = 0;
-        $chartData["SPP"] = round($chartData["SPP"], 2);
-        if ($chartData["SPP"] < 0)
             $chartData["SPP"] = 0;
-        $chartData["TGAS"] = $chartData["TGAS"] * 100;
-        $chartData["TGAS"] = round($chartData["TGAS"], 2);
-        if ($chartData["TGAS"] < 0)
             $chartData["TGAS"] = 0;
+        }
 
         echo json_encode($chartData);
     }
