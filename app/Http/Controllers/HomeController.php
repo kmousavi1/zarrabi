@@ -359,7 +359,7 @@ class HomeController extends Controller
         if ($dataCount > 0) {
             foreach ($data as $d) {
                 $str = $d->datetime;
-                $time = substr($str, 11, 2);
+                $time = substr($str, 11, 5);
                 array_push($tags, $time);
             }
         } else {
