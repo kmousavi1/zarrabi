@@ -446,4 +446,95 @@ class HomeController extends Controller
 
         echo json_encode($chartData);
     }
+
+    public function getRealTimeData()
+    {
+        $endDateTime = date("Y-m-d H:i:s");
+        $startDatetime = date('Y-m-d H:i:s', strtotime('-5 second', strtotime($endDateTime)));
+
+        /*       $chartData = ChartData::whereBetween('datetime', [$startDatetime, $endDateTime])
+                   ->orderBy('datetime', 'DESC')
+                   ->first();*/
+
+        $chartData = ChartData::orderBy('datetime', 'DESC')
+            ->first();
+
+        if ($chartData) {
+            // Drilling
+            $SURFRPM = round($chartData->SURFRPM, 2);
+            $WOB = round($chartData->WOB, 2);
+            $BITRPM = round($chartData->BITRPM, 2);
+            $TORQ = round($chartData->TORQ, 2);
+            $BLKPOSCOMP = round($chartData->BLKPOSCOMP, 2);
+            $HKLD = round($chartData->HKLD / 4500, 2);
+
+            // Pressure
+            $SPP = round($chartData->SPP, 2);
+            $CSGP = round($chartData->CSGP, 2);
+            $SPM01 = round($chartData->SPM01, 2);
+            $SPM02 = round($chartData->SPM02, 2);
+            $SPM03 = round($chartData->SPM03, 2);
+            $FLOWIN = round($chartData->FLOWIN, 2);
+
+            // MUD
+            $PITACTIVE = round($chartData->PITACTIVE * 6.289, 2);
+            $FLOWOUTP = round($chartData->FLOWOUTP * 100, 2);
+            $TGAS = round($chartData->TGAS, 2);
+
+            // Tags
+            $tag = substr($chartData->datetime, 11, 8);
+
+        } else {
+            // Drilling
+            $SURFRPM = 0;
+            $WOB = 0;
+            $BITRPM = 0;
+            $TORQ = 0;
+            $BLKPOSCOMP = 0;
+            $HKLD = 0;
+
+            // Pressure
+            $SPP = 0;
+            $CSGP = 0;
+            $SPM01 = 0;
+            $SPM02 = 0;
+            $SPM03 = 0;
+            $FLOWIN = 0;
+
+            // MUD
+            $PITACTIVE = 0;
+            $FLOWOUTP = 0;
+            $TGAS = 0;
+
+            // Tags
+            $tag = date("H:i:s");
+        }
+
+
+        $drillingDataSet = array(
+            "SURFRPM" => $SURFRPM,
+            "WOB" => $WOB,
+            "BITRPM" => $BITRPM,
+            "TORQ" => $TORQ,
+            "BLKPOSCOMP" => $BLKPOSCOMP,
+            "HKLD" => $HKLD
+        );
+
+        $pressureDataSet = array(
+            "SPP" => $SPP,
+            "CSGP" => $CSGP,
+            "SPM01" => $SPM01,
+            "SPM02" => $SPM02,
+            "SPM03" => $SPM03,
+            "FLOWIN" => $FLOWIN
+        );
+
+        $mudDataSet = array(
+            "PITACTIVE" => $PITACTIVE,
+            "FLOWOUTP" => $FLOWOUTP,
+            "TGAS" => $TGAS
+        );
+
+        return ['drilling' => $drillingDataSet, 'pressure' => $pressureDataSet, 'mud' => $mudDataSet, 'tags' => $tag];
+    }
 }

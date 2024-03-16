@@ -227,7 +227,8 @@
 
             new Promise(() => {
                 intervalId = setInterval(() => {
-                    getLiveData();
+                    console.log('first')
+                    getRealTimeData();
                     getLatestData();
                 }, 10000);
             });
@@ -249,7 +250,8 @@
 
                 new Promise(() => {
                     intervalId = setInterval(() => {
-                        getLiveData();
+                        console.log('second')
+                        getRealTimeData();
                         getLatestData();
                     }, 10000);
                 });
@@ -264,6 +266,19 @@
             chartDisplay("chart1", data.labels, data.drilling, data.drillingOptions);
             chartDisplay("chart2", data.labels, data.pressure, data.pressureOptions);
             chartDisplay("chart3", data.labels, data.mud, data.mudOptions);
+        }
+
+        async function getRealTimeData() {
+            let response = await callApi("live/real-time", "GET", null);
+            console.log('response', response);
+
+            await addDataToChart("chart1", response.tags, response.drilling);
+            await removeData("chart1");
+
+            await addDataToChart("chart2", response.tags, response.pressure);
+            await removeData("chart2");
+            await addDataToChart("chart3", response.tags, response.mud);
+            await removeData("chart3");
         }
 
         async function getHistoryData(startDate, endDate) {
@@ -362,6 +377,7 @@
                     indexAxis: 'y',
                     scales: {
                         x: {
+                            type: 'logarithmic',
                             min: options.min,
                             // max: options.max
                         },
@@ -428,11 +444,49 @@
             });
         }
 
+        async function addDataToChart(chartId, newLabels, newData) {
+            let chart = getChart(chartId);
+            if (chart) {
+                const data = chart.data;
+                if (data.datasets.length > 0) {
+                    data.labels.push(newLabels);
+
+                    for (let index = 0; index < data.datasets.length; ++index) {
+                        let dataset = data.datasets[index];
+                        let value = newData[dataset.label];
+                        dataset.data.push(value);
+                    }
+
+                    chart.update();
+                }
+            }
+        }
+
+        async function removeData(chartId) {
+            let chart = getChart(chartId);
+            if (chart) {
+                const data = chart.data;
+                if (data.datasets.length > 0) {
+                    chart.data.labels.splice(0, 1); // remove the label first
+
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.data.splice(0, 1);
+                    });
+
+                    chart.update();
+                }
+            }
+        }
+
         function chartDestroy(chartId) {
             let chart = Chart.getChart(chartId);
             if (chart) {
                 chart.destroy();
             }
+        }
+
+        function getChart(chartId) {
+            return Chart.getChart(chartId);
         }
 
         async function getLatestData() {
