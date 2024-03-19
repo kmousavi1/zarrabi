@@ -204,9 +204,7 @@
             let date = $("#date").val();
             let startTime = $("#startTime").val();
             let endTime = $("#endTime").val();
-            console.log('date', date);
-            console.log('startTime', startTime);
-            console.log('endTime', endTime);
+
             if (!date || !startTime || !endTime) {
                 return;
             }
@@ -260,6 +258,7 @@
             let response = await callApi("live/data", "GET", null);
             response = JSON.parse(response);
             let data = preparingData(response);
+            console.log('response', response)
 
             chartDisplay("chart1", data.labels, data.drilling, data.drillingOptions);
             chartDisplay("chart2", data.labels, data.pressure, data.pressureOptions);
@@ -275,6 +274,7 @@
             }
 
             response = JSON.parse(response);
+            console.log('response history', response)
             let data = preparingData(response);
 
             chartDisplay("chart4", data.labels, data.drilling, data.drillingOptions);
@@ -363,24 +363,19 @@
                     scales: {
                         x: {
                             min: options.min,
-                            // max: options.max
                         },
                         y: {
-                            // type: 'time',
-                            ticks: {
-                                // forces step size to be 50 units
-                                // stepSize: 5,
-                                // autoSkip: true,
-                                // maxTicksLimit: 10
+                            type: 'time',
+                            time: {
+                                unit: 'minute',
+                                displayFormats: {
+                                    minute: 'HH:mm'
+                                }
                             },
-                            // time: {
-                            //     unit: 'minute',
-                            //     stepSize: 5,
-                            //     displayFormats: {
-                            //         minute: 'HH:mm'
-                            //     },
-                            //     tooltipFormat: 'HH:mm'
-                            // }
+                            ticks: {
+                                stepSize: 3 // Set tick steps to 5 minutes
+                            },
+                            reverse: true
                         }
                     },
                     plugins: {
@@ -402,28 +397,6 @@
                             radius: 1
                         }
                     },
-                    // transitions: {
-                    //     show: {
-                    //         animations: {
-                    //             x: {
-                    //                 from: 0
-                    //             },
-                    //             y: {
-                    //                 from: 0
-                    //             }
-                    //         }
-                    //     },
-                    //     hide: {
-                    //         animations: {
-                    //             x: {
-                    //                 to: 0
-                    //             },
-                    //             y: {
-                    //                 to: 0
-                    //             }
-                    //         }
-                    //     }
-                    // }
                 }
             });
         }
