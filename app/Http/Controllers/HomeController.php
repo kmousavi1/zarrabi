@@ -47,6 +47,16 @@ class HomeController extends Controller
         ];
 
         return DB::select('
+        SELECT `datetime`,
+            SURFRPM, WOB, BITRPM, TORQ, BLKPOSCOMP, HKLD,
+            SPP, CSGP, SPM01, SPM02, SPM03, FLOWIN,
+            PITACTIVE, FLOWOUTP, TGAS
+        FROM `chartdata`
+            WHERE `datetime` BETWEEN :startDate AND :endDate
+        ORDER BY `datetime` DESC
+        ', $bindings);
+
+        /*return DB::select('
         WITH T AS (
         SELECT
             ROW_NUMBER() OVER(PARTITION BY CAST(`datetime` AS DATE), HOUR(`datetime`), MINUTE(`datetime`) ORDER BY `datetime` DESC) AS RW,`datetime`,
@@ -57,7 +67,7 @@ class HomeController extends Controller
             ORDER BY `datetime` DESC
         )
         SELECT * FROM T WHERE RW = 1;
-        ', $bindings);
+        ', $bindings);*/
     }
 
     public function historyData_($startDate, $endDate)
@@ -359,23 +369,23 @@ class HomeController extends Controller
         if ($dataCount > 0) {
             foreach ($data as $d) {
                 $str = $d->datetime;
-                $time = substr($str, 11, 5);
-                array_push($tags, $time);
+//                $time = substr($str, 11, 5);
+                array_push($tags, $str);
             }
         } else {
             date_default_timezone_set("Asia/Tehran");
 
             if ($endDate) {
-                $nowDate = date('H:i', strtotime($endDate));
+                $nowDate = date('Y-m-d H:i:s', strtotime($endDate));
             } else {
-                $nowDate = date("H:i");
+                $nowDate = date("Y-m-d H:i:s");
             }
 
-            $date1 = date('H:i', strtotime('-5 minute', strtotime($nowDate)));
-            $date2 = date('H:i', strtotime('-5 minute', strtotime($date1)));
-            $date3 = date('H:i', strtotime('-5 minute', strtotime($date2)));
-            $date4 = date('H:i', strtotime('-5 minute', strtotime($date3)));
-            $date5 = date('H:i', strtotime('-5 minute', strtotime($date4)));
+            $date1 = date('Y-m-d H:i:s', strtotime('-5 minute', strtotime($nowDate)));
+            $date2 = date('Y-m-d H:i:s', strtotime('-5 minute', strtotime($date1)));
+            $date3 = date('Y-m-d H:i:s', strtotime('-5 minute', strtotime($date2)));
+            $date4 = date('Y-m-d H:i:s', strtotime('-5 minute', strtotime($date3)));
+            $date5 = date('Y-m-d H:i:s', strtotime('-5 minute', strtotime($date4)));
 
             array_push($tags, $nowDate);
             array_push($tags, $date1);
@@ -383,8 +393,6 @@ class HomeController extends Controller
             array_push($tags, $date3);
             array_push($tags, $date4);
             array_push($tags, $date5);
-
-            $tags = array_reverse($tags);
         }
         return $tags;
     }
