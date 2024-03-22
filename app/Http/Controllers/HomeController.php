@@ -86,10 +86,10 @@ class HomeController extends Controller
 
         $chartData = $this->getChartData($startDate, $endDate);
 
-        if (count($chartData) > 0) {
+//        if (count($chartData) > 0) {
 //            $chartData = $chartData->toArray();
-            $chartData = array_reverse($chartData);
-        }
+//            $chartData = array_reverse($chartData);
+//        }
 
         $tags = $this->getTags($chartData, $endDate);
         $display_data = $this->getDisplayData($chartData, $tags);
@@ -107,10 +107,10 @@ class HomeController extends Controller
 
         $chartData = $this->getChartData($start_datetime, $end_datetime);
 
-        if (count($chartData) > 0) {
+//        if (count($chartData) > 0) {
 //            $chartData = $chartData->toArray();
-            $chartData = array_reverse($chartData);
-        }
+//            $chartData = array_reverse($chartData);
+//        }
 
         $tags = $this->getTags($chartData, $end_datetime);
         $display_data = $this->getDisplayData($chartData, $tags);
@@ -128,10 +128,10 @@ class HomeController extends Controller
 
         $chartData = $this->getChartData($start_datetime, $end_datetime);
 
-        if (count($chartData) > 0) {
+//        if (count($chartData) > 0) {
 //            $chartData = $chartData->toArray();
-            $chartData = array_reverse($chartData);
-        }
+//            $chartData = array_reverse($chartData);
+//        }
 
         $tags = $this->getTags($chartData, $end_datetime);
         $display_data = $this->getDisplayData($chartData, $tags);
