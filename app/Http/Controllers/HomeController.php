@@ -41,6 +41,17 @@ class HomeController extends Controller
 
     public function getChartData($startDate, $endDate)
     {
+
+        $timestamp1 = strtotime($startDate);
+        $timestamp2 = strtotime($endDate);
+
+        $diffInSeconds = $timestamp2 - $timestamp1;
+        $diffInHours = $diffInSeconds / 3600;
+
+        if ($diffInHours > 3) {
+            ini_set('memory_limit', '1G');
+        }
+
         $bindings = [
             'startDate' => $startDate,
             'endDate' => $endDate
@@ -94,6 +105,7 @@ class HomeController extends Controller
         $tags = $this->getTags($chartData, $endDate);
         $display_data = $this->getDisplayData($chartData, $tags);
         echo json_encode($display_data);
+        ini_set('memory_limit', '128MB');
     }
 
     public function historyData()
@@ -115,6 +127,7 @@ class HomeController extends Controller
         $tags = $this->getTags($chartData, $end_datetime);
         $display_data = $this->getDisplayData($chartData, $tags);
         echo json_encode($display_data);
+        ini_set('memory_limit', '128MB');
     }
 
     public function liveData()
