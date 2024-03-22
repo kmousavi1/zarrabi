@@ -105,7 +105,7 @@ class HomeController extends Controller
         $tags = $this->getTags($chartData, $endDate);
         $display_data = $this->getDisplayData($chartData, $tags);
         echo json_encode($display_data);
-        ini_set('memory_limit', '128MB');
+        ini_set('memory_limit', '128M');
     }
 
     public function historyData()
@@ -127,7 +127,7 @@ class HomeController extends Controller
         $tags = $this->getTags($chartData, $end_datetime);
         $display_data = $this->getDisplayData($chartData, $tags);
         echo json_encode($display_data);
-        ini_set('memory_limit', '128MB');
+        ini_set('memory_limit', '128M');
     }
 
     public function liveData()
