@@ -199,6 +199,10 @@
 
     <script>
         let intervalId;
+        let liveLabels = [];
+        let liveDrillingData = new Map();
+        let livePressureData = new Map();
+        let liveMudData = new Map();
 
         function submitFilterData() {
             let date = $("#date").val();
@@ -225,7 +229,7 @@
 
             new Promise(() => {
                 intervalId = setInterval(() => {
-                    getLiveData();
+                    getRealTimeData();
                     getLatestData();
                 }, 10000);
             });
@@ -247,7 +251,8 @@
 
                 new Promise(() => {
                     intervalId = setInterval(() => {
-                        getLiveData();
+                        console.log('second')
+                        getRealTimeData();
                         getLatestData();
                     }, 10000);
                 });
@@ -257,12 +262,119 @@
         async function getLiveData() {
             let response = await callApi("live/data", "GET", null);
             response = JSON.parse(response);
-            let data = preparingData(response);
-            console.log('response', response)
+            let data = preparingData(response, "LIVE");
 
             chartDisplay("chart1", data.labels, data.drilling, data.drillingOptions);
             chartDisplay("chart2", data.labels, data.pressure, data.pressureOptions);
             chartDisplay("chart3", data.labels, data.mud, data.mudOptions);
+        }
+
+        async function getRealTimeData() {
+            let response = await callApi("live/real-time", "GET", null);
+            console.log('response', response);
+
+            liveLabels.push(response.tags);
+            liveDrillingData.forEach((value, key, map) => {
+                value.push(response.drilling[key]);
+            });
+            livePressureData.forEach((value, key, map) => {
+                value.push(response.pressure[key]);
+            });
+            liveMudData.forEach((value, key, map) => {
+                value.push(response.mud[key]);
+            });
+
+            let chart1Date1 = Math.min(...liveLabels.map(item => new Date(item)));
+            let chart1Date2 = Math.max(...liveLabels.map(item => new Date(item)));
+            let diffHours = diff_hours(chart1Date1, chart1Date2);
+
+            let chart1 = getChart("chart1");
+            if (chart1) {
+                const chart1Data = chart1.data;
+                if (chart1Data.datasets.length > 0) {
+                    chart1Data.labels = liveLabels;
+                    for (let index = 0; index < chart1Data.datasets.length; ++index) {
+                        let dataset = chart1Data.datasets[index];
+                        dataset.data = liveDrillingData.get(dataset.label);
+                    }
+                    chart1.update();
+                }
+
+                if (chart1Data.datasets.length > 0) {
+                    if (diffHours > 60) {
+                        liveLabels.shift();
+                        chart1Data.labels = liveLabels;
+                        chart1Data.datasets.forEach(dataset => {
+                            let value = liveDrillingData.get(dataset.label);
+                            value.shift();
+                            liveDrillingData.set(dataset.label, value);
+                            dataset.data = value;
+                        });
+                    }
+                    chart1.update();
+                }
+            }
+
+            let chart2 = getChart("chart2");
+            if (chart2) {
+                const chart2Data = chart2.data;
+                if (chart2Data.datasets.length > 0) {
+                    chart2Data.labels = liveLabels;
+                    for (let index = 0; index < chart2Data.datasets.length; ++index) {
+                        let dataset = chart2Data.datasets[index];
+                        dataset.data = livePressureData.get(dataset.label);
+                    }
+                    chart2.update();
+                }
+
+                if (chart2Data.datasets.length > 0) {
+                    if (diffHours > 60) {
+                        liveLabels.shift();
+                        chart2Data.labels = liveLabels;
+                        chart2Data.datasets.forEach(dataset => {
+                            let value = livePressureData.get(dataset.label);
+                            value.shift();
+                            livePressureData.set(dataset.label, value);
+                            dataset.data = value;
+                        });
+                    }
+                    chart2.update();
+                }
+            }
+
+            let chart3 = getChart("chart3");
+            if (chart3) {
+                const chart3Data = chart3.data;
+                if (chart3Data.datasets.length > 0) {
+                    chart3Data.labels = liveLabels;
+                    for (let index = 0; index < chart3Data.datasets.length; ++index) {
+                        let dataset = chart3Data.datasets[index];
+                        dataset.data = liveMudData.get(dataset.label);
+                    }
+                    chart3.update();
+                }
+
+                if (chart3Data.datasets.length > 0) {
+                    if (diffHours > 60) {
+                        liveLabels.shift();
+                        chart3Data.labels = liveLabels;
+                        chart3Data.datasets.forEach(dataset => {
+                            let value = liveMudData.get(dataset.label);
+                            value.shift();
+                            liveMudData.set(dataset.label, value);
+                            dataset.data = value;
+                        });
+                    }
+                    chart3.update();
+                }
+            }
+        }
+
+        function diff_hours(dt1, dt2) {
+            dt2 = new Date(dt2);
+            dt1 = new Date(dt1);
+            let diff = (dt2.getTime() - dt1.getTime()) / 1000;
+            return diff / 60;
         }
 
         async function getHistoryData(startDate, endDate) {
@@ -275,14 +387,14 @@
 
             response = JSON.parse(response);
             console.log('response history', response)
-            let data = preparingData(response);
+            let data = preparingData(response, "HISTORY");
 
             chartDisplay("chart4", data.labels, data.drilling, data.drillingOptions);
             chartDisplay("chart5", data.labels, data.pressure, data.pressureOptions);
             chartDisplay("chart6", data.labels, data.mud, data.mudOptions);
         }
 
-        function preparingData(apiResponse) {
+        function preparingData(apiResponse, tabKey) {
 
             let drillingParameters = apiResponse.drillingParameters;
             let drillingData = drillingParameters.dataSet;
@@ -298,6 +410,9 @@
                     borderColor: drillingColors[key]
                 };
                 drillingParameterDatasets.push(dataset);
+                if (tabKey === "LIVE") {
+                    liveDrillingData.set(key, drillingData[key]);
+                }
             }
 
             let mudParameters = apiResponse.mudParameters;
@@ -316,6 +431,9 @@
                     borderColor: mudColors[key],
                 };
                 mudParametersDatasets.push(dataset);
+                if (tabKey === "LIVE") {
+                    liveMudData.set(key, mudData[key]);
+                }
             }
 
             let pressureParameters = apiResponse.pressureParameters;
@@ -334,8 +452,13 @@
                     borderColor: pressureColors[key]
                 };
                 pressureParametersDatasets.push(dataset);
+                if (tabKey === "LIVE") {
+                    livePressureData.set(key, pressureData[key]);
+                }
             }
-
+            if (tabKey === "LIVE") {
+                liveLabels = apiResponse.tags;
+            }
             return {
                 "drilling": drillingParameterDatasets,
                 "drillingOptions": drillingOptions,
@@ -362,7 +485,11 @@
                     indexAxis: 'y',
                     scales: {
                         x: {
+                            type: 'logarithmic',
                             min: options.min,
+                            ticks: {
+                                beginAtZero: true
+                            }
                         },
                         y: {
                             type: 'time',
@@ -401,11 +528,49 @@
             });
         }
 
+        async function addDataToChart(chartId, newLabels, newData) {
+            let chart = getChart(chartId);
+            if (chart) {
+                const data = chart.data;
+                if (data.datasets.length > 0) {
+                    data.labels.push(newLabels);
+
+                    for (let index = 0; index < data.datasets.length; ++index) {
+                        let dataset = data.datasets[index];
+                        let value = newData[dataset.label];
+                        dataset.data.push(value);
+                    }
+
+                    chart.update();
+                }
+            }
+        }
+
+        async function removeData(chartId) {
+            let chart = getChart(chartId);
+            if (chart) {
+                const data = chart.data;
+                if (data.datasets.length > 0) {
+                    chart.data.labels.splice(0, 1); // remove the label first
+
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.data.splice(0, 1);
+                    });
+
+                    chart.update();
+                }
+            }
+        }
+
         function chartDestroy(chartId) {
             let chart = Chart.getChart(chartId);
             if (chart) {
                 chart.destroy();
             }
+        }
+
+        function getChart(chartId) {
+            return Chart.getChart(chartId);
         }
 
         async function getLatestData() {
@@ -436,5 +601,6 @@
             });
             return result;
         }
+
     </script>
 @endsection
