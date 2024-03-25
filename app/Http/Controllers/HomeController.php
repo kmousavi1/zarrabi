@@ -97,10 +97,10 @@ class HomeController extends Controller
 
         $chartData = $this->getChartData($startDate, $endDate);
 
-//        if (count($chartData) > 0) {
+        if (count($chartData) > 0) {
 //            $chartData = $chartData->toArray();
-//            $chartData = array_reverse($chartData);
-//        }
+            $chartData = array_reverse($chartData);
+        }
 
         $tags = $this->getTags($chartData, $endDate);
         $display_data = $this->getDisplayData($chartData, $tags);
@@ -119,10 +119,10 @@ class HomeController extends Controller
 
         $chartData = $this->getChartData($start_datetime, $end_datetime);
 
-//        if (count($chartData) > 0) {
+        if (count($chartData) > 0) {
 //            $chartData = $chartData->toArray();
-//            $chartData = array_reverse($chartData);
-//        }
+            $chartData = array_reverse($chartData);
+        }
 
         $tags = $this->getTags($chartData, $end_datetime);
         $display_data = $this->getDisplayData($chartData, $tags);
@@ -141,10 +141,10 @@ class HomeController extends Controller
 
         $chartData = $this->getChartData($start_datetime, $end_datetime);
 
-//        if (count($chartData) > 0) {
+        if (count($chartData) > 0) {
 //            $chartData = $chartData->toArray();
-//            $chartData = array_reverse($chartData);
-//        }
+            $chartData = array_reverse($chartData);
+        }
 
         $tags = $this->getTags($chartData, $end_datetime);
         $display_data = $this->getDisplayData($chartData, $tags);
@@ -400,12 +400,12 @@ class HomeController extends Controller
             $date4 = date('Y-m-d H:i:s', strtotime('-5 minute', strtotime($date3)));
             $date5 = date('Y-m-d H:i:s', strtotime('-5 minute', strtotime($date4)));
 
-            array_push($tags, $nowDate);
-            array_push($tags, $date1);
-            array_push($tags, $date2);
-            array_push($tags, $date3);
-            array_push($tags, $date4);
             array_push($tags, $date5);
+            array_push($tags, $date4);
+            array_push($tags, $date3);
+            array_push($tags, $date2);
+            array_push($tags, $date1);
+            array_push($tags, $nowDate);
         }
         return $tags;
     }
@@ -473,11 +473,8 @@ class HomeController extends Controller
         $endDateTime = date("Y-m-d H:i:s");
         $startDatetime = date('Y-m-d H:i:s', strtotime('-5 second', strtotime($endDateTime)));
 
-        /*       $chartData = ChartData::whereBetween('datetime', [$startDatetime, $endDateTime])
-                   ->orderBy('datetime', 'DESC')
-                   ->first();*/
-
-        $chartData = ChartData::orderBy('datetime', 'DESC')
+        $chartData = ChartData::whereBetween('datetime', [$startDatetime, $endDateTime])
+            ->orderBy('datetime', 'DESC')
             ->first();
 
         if ($chartData) {
@@ -503,8 +500,7 @@ class HomeController extends Controller
             $TGAS = round($chartData->TGAS, 2);
 
             // Tags
-            $tag = substr($chartData->datetime, 11, 8);
-
+            $tag = $chartData->datetime;
         } else {
             // Drilling
             $SURFRPM = 0;
@@ -528,9 +524,8 @@ class HomeController extends Controller
             $TGAS = 0;
 
             // Tags
-            $tag = date("H:i:s");
+            $tag = date("Y-m-d H:i:s");
         }
-
 
         $drillingDataSet = array(
             "SURFRPM" => $SURFRPM,
