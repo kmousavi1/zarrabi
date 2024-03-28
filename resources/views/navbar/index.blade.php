@@ -44,11 +44,23 @@
 
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="live" role="tabpanel" aria-labelledby="live-tab">
-            <div class="row p-5">
+            <div class="row pt-3 pb-3">
                 <div class="col-md-3">
                     <div class="card h-100">
-                        <div class="card-header">
-                            Drilling Parameter
+                        <div class="card-header d-flex justify-content-between">
+                            <h5 class="mb-0">Drilling Parameter</h5>
+                            <div class="dropdown">
+                                <i class="btn-secondary fa fa-bars" type="button" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                </i>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Show Data</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Excel</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="card-body" style="height: 500px">
                             <canvas id="chart1"></canvas>
@@ -57,8 +69,17 @@
                 </div>
                 <div class="col-md-3">
                     <div class="card h-100">
-                        <div class="card-header">
-                            Pressure Parameter
+                        <div class="card-header d-flex justify-content-between">
+                            <h5 class="mb-0">Pressure Parameter</h5>
+                            <div class="dropdown">
+                                <i class="btn-secondary fa fa-bars" type="button" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                </i>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Show Data</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Excel</a></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="card-body" style="height: 500px">
                             <canvas id="chart2"></canvas>
@@ -67,8 +88,17 @@
                 </div>
                 <div class="col-md-3">
                     <div class="card h-100">
-                        <div class="card-header">
-                            Mud Parameter
+                        <div class="card-header d-flex justify-content-between">
+                            <h5 class="mb-0">Mud Parameter</h5>
+                            <div class="dropdown">
+                                <i class="btn-secondary fa fa-bars" type="button" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                </i>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Show Data</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Excel</a></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="card-body" style="height: 500px">
                             <canvas id="chart3"></canvas>
@@ -77,7 +107,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="card h-100">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between">
                             Data
                         </div>
                         <div class="card-body" style="height: 500px">
@@ -123,11 +153,37 @@
                     </div>
                 </div>
             </div>
+            <div class="row ">
+                {{--<div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">Test</div>
+                        <div class="card-body">Test</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">Test</div>
+                        <div class="card-body">Test</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">Test</div>
+                        <div class="card-body">Test</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">Test</div>
+                        <div class="card-body">Test</div>
+                    </div>
+                </div>--}}
+            </div>
         </div>
 
         <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
 
-            <div class="col-12 col-md-4 d-flex flex-column p-5 pb-1">
+            <div class="col-12 col-md-4 d-flex flex-column pt-3 pb-3">
 
                 <div class="input-group p-2">
                     <div class="input-group-prepend w-30">
@@ -161,12 +217,20 @@
                 </div>
             </div>
 
-            <div class="row p-5">
-
+            <div class="row">
                 <div class="col-md-4">
                     <div class="card h-100">
-                        <div class="card-header">
-                            Drilling Parameter
+                        <div class="card-header d-flex justify-content-between">
+                            <h5 class="mb-0">Drilling Parameter</h5>
+                            <div class="dropdown">
+                                <i class="btn-secondary fa fa-bars" type="button" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                </i>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Show Data</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Excel</a></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="card-body" style="height: 500px">
                             <canvas id="chart4"></canvas>
@@ -175,8 +239,17 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card h-100">
-                        <div class="card-header">
-                            Pressure Parameter
+                        <div class="card-header d-flex justify-content-between">
+                            <h5 class="mb-0">Pressure Parameter</h5>
+                            <div class="dropdown">
+                                <i class="btn-secondary fa fa-bars" type="button" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                </i>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Show Data</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Excel</a></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="card-body" style="height: 500px">
                             <canvas id="chart5"></canvas>
@@ -185,8 +258,17 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card h-100">
-                        <div class="card-header">
-                            Mud Parameter
+                        <div class="card-header d-flex justify-content-between">
+                            <h5 class="mb-0">Mud Parameter</h5>
+                            <div class="dropdown">
+                                <i class="btn-secondary fa fa-bars" type="button" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                </i>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Show Data</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Excel</a></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="card-body" style="height: 500px">
                             <canvas id="chart6"></canvas>
